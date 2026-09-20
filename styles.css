@@ -311,18 +311,26 @@ a { color: inherit; }
 }
 
 /* Stacked phones, both upright — the second sits behind and slightly lower,
-   the way Apple stages a pair. No rotation at any width. */
+   the way Apple stages a pair. No rotation at any width.
+
+   Every offset runs through --tx/--ty, so one pair of numbers drives the
+   resting layout, the entry animation, the float and the reduced-motion
+   fallback. A breakpoint that wants the pair staged differently sets those
+   two and nothing else — before, it had to restate a transform that the
+   animation then overrode. */
 .hero__art { position: relative; display: grid; place-items: center; min-height: clamp(560px, 66vh, 720px); }
-.hero__art .phone { position: absolute; }
+.hero__art .phone { position: absolute; transform: translate(var(--tx, 0), var(--ty, 0)); }
 
 .phone--back {
   width: 59%;                    /* ~92% of the front phone, not a miniature */
-  transform: translate(38%, 7%);
+  --tx: 38%;
+  --ty: 7%;
   opacity: 0.92;
 }
 .phone--front {
   width: 64%;
-  transform: translate(-14%, -2%);
+  --tx: -14%;
+  --ty: -2%;
   z-index: 2;
 }
 
@@ -685,35 +693,28 @@ a { color: inherit; }
   .footer__inner { grid-template-columns: 1fr; }
 }
 
-/* Narrow: the two overlapping phones are absolutely positioned and sized in
-   percentages, so once the hero is one column they size off its full width and
-   ride up over the copy. One phone, in flow, from the same breakpoint. */
+/* Narrow: once the hero is one column the phones size off its full width, so
+   they are capped in pixels here and the copy above them is centred. */
 @media (max-width: 1000px) {
-  /* Both phones, upright and stacked: the front one sits in flow so it sets
-     the container's height, the second is absolute, smaller and behind. */
+  /* Both phones, upright and stacked: the front one drops into flow so it sets
+     the container's height, the back stays absolute, smaller and behind.
+
+     One column is far narrower than the hero's art half, so the desktop stage
+     runs the back phone off the edge. Pull it in to where the pair's outer
+     edges sit the same distance from the centre line: with the back at 92% of
+     the front, that is (0.14 + (1 - 0.92) / 2) / 0.92 ≈ 19.6% of its own
+     width, and it leaves ~30% of the back phone showing. */
   .hero__art {
-    position: relative;
-    display: flex;
-    justify-content: center;
     min-height: 0;
     margin-top: 36px;
   }
   .hero__art .phone--front {
     position: relative;            /* in flow: it sets the container's height */
-    z-index: 2;
-    width: min(236px, 62%);
-    margin-inline: 0;
-    transform: none;
+    width: min(236px, 64%);
   }
   .hero__art .phone--back {
-    display: block;
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 50%;
-    width: min(218px, 57%);      /* ~92% of the front phone */
-    transform: translate(-6%, 6%);
-    opacity: 0.9;
+    width: min(217px, 58.9%);      /* 92% of the front phone */
+    --tx: 19.6%;
   }
 
   /* One column reads better centred, and it balances the phone below it. */
@@ -854,21 +855,20 @@ a { color: inherit; }
   to   { opacity: var(--end-opacity, 1); transform: translate(var(--tx, 0), var(--ty, 0)) rotate(var(--rot, 0deg)); }
 }
 
-.phone--back  { --tx: 38%; --ty: 7%;  --rot: 0deg; --end-opacity: 0.92; }
-.phone--front { --tx: -14%; --ty: -2%; --rot: 0deg; }
+/* --tx / --ty are set with the layout above; the entry animation only needs
+   to know where the pair comes to rest. */
+.phone--back { --end-opacity: 0.92; }
 
 /* A slow float, so the hero is never quite still. */
 .hero__art .phone::after { content: none; }
-.hero__art.is-float .phone--front { animation: phone-in 900ms var(--e-snap) forwards, float-a 7s ease-in-out 1.1s infinite; }
-.hero__art.is-float .phone--back  { animation: phone-in 900ms var(--e-snap) 280ms forwards, float-b 9s ease-in-out 1.4s infinite; }
+.hero__art.is-float .phone--front { animation: phone-in 900ms var(--e-snap) forwards, float-phone 7s ease-in-out 1.1s infinite; }
+.hero__art.is-float .phone--back  { animation: phone-in 900ms var(--e-snap) 280ms forwards, float-phone 9s ease-in-out 1.4s infinite; }
 
-@keyframes float-a {
-  0%, 100% { transform: translate(-14%, -2%); }
-  50%      { transform: translate(-14%, -3.4%); }
-}
-@keyframes float-b {
-  0%, 100% { transform: translate(38%, 7%); }
-  50%      { transform: translate(38%, 5.6%); }
+/* Each phone breathes around wherever it rests, so the float never undoes the
+   centring. The two differ by duration, which is enough to read as two. */
+@keyframes float-phone {
+  0%, 100% { transform: translate(var(--tx, 0), var(--ty, 0)); }
+  50%      { transform: translate(var(--tx, 0), calc(var(--ty, 0) - 1.4%)); }
 }
 
 /* ── a light sweep passes over each screen once, when it arrives ── */
@@ -1060,8 +1060,9 @@ a { color: inherit; }
   }
   .peg__fill { width: var(--w, 100%) !important; animation: none !important; }
   .phone__sweep { display: none; }
-  .phone--back  { opacity: 0.92 !important; transform: translate(38%, 7%) !important; }
-  .phone--front { transform: translate(-14%, -2%) !important; }
+  /* Still, but still staged: the pair keeps its resting offsets. */
+  .hero__art .phone { transform: translate(var(--tx, 0), var(--ty, 0)) !important; }
+  .hero__art .phone--back { opacity: 0.92 !important; }
 }
 
 /* ─────────────────────  problem → fix connector  ───────────────────── */
