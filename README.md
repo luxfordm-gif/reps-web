@@ -28,6 +28,27 @@ mocked up, using [`capture-website`](https://github.com/sindresorhus/capture-web
 the frames keep true iPhone proportions; `.phone img` pins `aspect-ratio` to
 1170/2532 as a backstop.
 
+## Deploying
+
+Netlify, configured in `netlify.toml`. No build step — the repo root is the
+publish directory.
+
+To connect it: Netlify → **Add new site** → **Import an existing project** →
+GitHub → `reps-web`. The settings come from `netlify.toml`, so leave the build
+command empty and the publish directory as `.`.
+
+The config also sets security headers and a Content-Security-Policy. The CSP
+pins a `sha256` hash of the single inline script in `index.html` (the one that
+sets the `.js` class before first paint). **If you edit that line, recompute
+the hash**, or the script is blocked and every animated element stays hidden:
+
+```bash
+printf "%s" "document.documentElement.classList.add('js');" | openssl dgst -sha256 -binary | openssl base64
+```
+
+Stagger indices live in `styles.css` as `:nth-child` rules rather than
+`style="--i:n"` attributes, so the CSP can forbid inline styles outright.
+
 ## Notes
 
 - Light and dark both supported, from semantic tokens.

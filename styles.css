@@ -718,6 +718,34 @@ a { color: inherit; }
   .reveal { opacity: 1; transform: none; }
 }
 
+/* ── stagger indices ──────────────────────────────────────────────────────
+   These live here rather than as style="--i:n" in the markup so the site can
+   ship a Content-Security-Policy that forbids inline style attributes. */
+.how__step:nth-child(1) { --i: 0; }
+.how__step:nth-child(2) { --i: 1; }
+.how__step:nth-child(3) { --i: 2; }
+
+.peg:nth-child(1) { --i: 0; }
+.peg:nth-child(2) { --i: 1; }
+.peg:nth-child(3) { --i: 2; }
+
+.offline-card__list li:nth-child(1) { --i: 0; }
+.offline-card__list li:nth-child(2) { --i: 1; }
+.offline-card__list li:nth-child(3) { --i: 2; }
+
+.stat:nth-child(1) { --i: 0; }
+.stat:nth-child(2) { --i: 1; }
+.stat:nth-child(3) { --i: 2; }
+
+.cards .card:nth-child(1) { --i: 0; }
+.cards .card:nth-child(2) { --i: 1; }
+.cards .card:nth-child(3) { --i: 2; }
+.cards .card:nth-child(4) { --i: 3; }
+.cards .card:nth-child(5) { --i: 4; }
+.cards .card:nth-child(6) { --i: 5; }
+.cards .card:nth-child(7) { --i: 6; }
+.cards .card:nth-child(8) { --i: 7; }
+
 /* ═══════════════════════════  IN-SECTION MOTION  ═══════════════════════════
    Each figure plays once, when it is reached. Everything here is inert until
    JS adds .is-in, and the reduced-motion block at the end of the file switches
