@@ -258,7 +258,10 @@
         <div class="offline-card">
           <div class="offline-card__row">
             <span class="dot dot--off" aria-hidden="true"></span>
-            <span class="offline-card__state">No connection</span>
+            <span class="offline-card__state">
+              <span class="offline-card__state-txt offline-card__state-txt--off">No connection</span>
+              <span class="offline-card__state-txt offline-card__state-txt--on" aria-hidden="true">Back online</span>
+            </span>
           </div>
           <p class="offline-card__big">Logged on your phone</p>
           <ul class="offline-card__list">
@@ -268,7 +271,7 @@
           </ul>
           <div class="offline-card__foot">
             <span class="dot dot--on" aria-hidden="true"></span>
-            <span>Back online — 10 sets sent</span>
+            <span>10 sets sent</span>
           </div>
         </div>
       </figure>
@@ -295,19 +298,19 @@
       <figure class="panel" data-anim="stats">
         <div class="stat-grid">
           <div class="stat">
-            <span class="stat__label">Overall strength</span>
+            <span class="stat__label">Strength</span>
             <span class="stat__value"><span data-count="8.4" data-dp="1" data-prefix="+">+0.0</span><span class="stat__unit">%</span></span>
-            <span class="stat__note">First two weeks vs last two</span>
+            <span class="stat__note">vs first two weeks</span>
           </div>
           <div class="stat">
             <span class="stat__label">This week</span>
             <span class="stat__value"><span data-count="3" data-dp="0">0</span><span class="stat__unit">/4</span></span>
-            <span class="stat__note">Sessions done</span>
+            <span class="stat__note">Sessions</span>
           </div>
           <div class="stat stat--wide">
-            <span class="stat__label">New records this month</span>
+            <span class="stat__label">New records</span>
             <span class="stat__value"><span data-count="6" data-dp="0">0</span></span>
-            <span class="stat__note">Across bench, squat and row</span>
+            <span class="stat__note">Bench, squat and row</span>
           </div>
         </div>
       </figure>

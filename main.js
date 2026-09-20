@@ -81,6 +81,7 @@
   function start(fig) {
     var kind = fig.getAttribute('data-anim');
     if (kind === 'calc') cycleCalc(fig);
+    if (kind === 'sync') cycleSync(fig);
     if (kind === 'pegs' || kind === 'stats') {
       countUp(fig.closest('.feature'), kind === 'pegs' ? 900 : 300);
     }
@@ -109,11 +110,31 @@
 
       if (cells.length >= 3) {
         var load = LOADS[i];
-        animate(cells[0], load.oneSide, load.oneSide % 1 ? 1 : 0, '');
-        animate(cells[1], load.withBar, 0, '');
-        animate(cells[2], load.without, 0, '');
+        animate(cells[0], load.oneSide, load.oneSide % 1 ? 1 : 0, '', 460);
+        animate(cells[1], load.withBar, 0, '', 460);
+        animate(cells[2], load.without, 0, '', 460);
       }
-    }, 3200);
+    }, 1700);
+  }
+
+  /* The offline card plays its whole story on a loop: three sets logged with
+     no signal, then the connection returns and they go up. One class does it —
+     the CSS holds every step — so the two halves cannot drift apart. The
+     offline half is shorter; it is the part the reader already believes. */
+  function cycleSync(fig) {
+    var card = fig.querySelector('.offline-card');
+    if (!card) return;
+
+    var online = false;
+    (function next() {
+      window.setTimeout(function () {
+        if (!document.hidden) {
+          online = !online;
+          card.classList.toggle('is-online', online);
+        }
+        next();
+      }, online ? 3200 : 2600);
+    })();
   }
 
   /* Numbers run up to their value the first time their section is reached. */
@@ -129,15 +150,16 @@
 
   /* Writes into the element's first text node so any nested unit <span>
      ("kg", "%", "/4") survives the update. */
-  function animate(el, to, dp, prefix) {
+  function animate(el, to, dp, prefix, ms) {
     var node = firstText(el);
     if (!node) return;
     var from = parseFloat(String(node.nodeValue).replace(/[^0-9.-]/g, '')) || 0;
+    var dur = ms || 900;
     var t0 = 0;
 
     function frame(now) {
       if (!t0) t0 = now;
-      var p = Math.min((now - t0) / 900, 1);
+      var p = Math.min((now - t0) / dur, 1);
       var eased = 1 - Math.pow(1 - p, 3);
       node.nodeValue = (prefix || '') + (from + (to - from) * eased).toFixed(dp);
       if (p < 1) requestAnimationFrame(frame);
