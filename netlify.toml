@@ -42,6 +42,11 @@
 # Screenshots and brand assets change rarely, but their names are not
 # content-hashed — a day is long enough to help and short enough to forgive.
 [[headers]]
+  for = "/assets/og.png"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=86400"

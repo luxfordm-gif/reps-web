@@ -49,6 +49,21 @@ printf "%s" "document.documentElement.classList.add('js');" | openssl dgst -sha2
 Stagger indices live in `styles.css` as `:nth-child` rules rather than
 `style="--i:n"` attributes, so the CSP can forbid inline styles outright.
 
+## Social share card
+
+`assets/og.png` (2400×1260, the 1.91:1 ratio platforms crop to) is generated
+from `tools/og.html`, so it can be rebuilt when the page changes:
+
+```bash
+npx http-server -p 5300      # in one shell
+node tools/shoot-og.mjs      # in another
+```
+
+**The Open Graph tags hard-code the site URL.** Scrapers need an absolute
+`og:image` and show nothing if it 404s, so if the deployed domain is not
+`reps-web.netlify.app`, update every `https://reps-web.netlify.app` in
+`index.html` to match.
+
 ## Notes
 
 - Light and dark both supported, from semantic tokens.

@@ -1,0 +1,109 @@
+<!doctype html>
+<!--
+  Source for assets/og.png — the social share card.
+  Rendered at 1200x630 (the 1.91:1 ratio every platform crops to) with:
+
+    node tools/shoot-og.mjs
+
+  Keep it in the repo so the card can be regenerated when the page changes.
+-->
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=general-sans@400,500,600&display=swap" />
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    display: flex;
+    background: #FAFAFA;
+    color: #0A0A0A;
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow: hidden;
+  }
+
+  .copy {
+    flex: 1 1 58%;
+    padding: 64px 0 64px 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .mark { height: 26px; width: auto; margin-bottom: 40px; }
+
+  h1 {
+    font-size: 66px;
+    font-weight: 600;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    max-width: 11ch;
+  }
+  h1 span { color: #8E8E93; }
+
+  p {
+    margin-top: 24px;
+    font-size: 23px;
+    line-height: 1.4;
+    color: #6E6E73;
+    max-width: 27ch;
+  }
+
+  .facts {
+    display: flex;
+    gap: 26px;
+    margin-top: 40px;
+    padding-top: 26px;
+    border-top: 1px solid #E5E5EA;
+    font-size: 17px;
+    color: #6E6E73;
+    list-style: none;
+  }
+  .facts li { display: flex; align-items: center; gap: 9px; }
+  .facts li::before {
+    content: "";
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: #8E8E93;
+  }
+
+  /* The phone bleeds off the bottom-right, same treatment as the hero. */
+  .art { position: relative; flex: 1 1 42%; }
+  .phone {
+    position: absolute;
+    top: 76px;
+    left: 34px;
+    width: 340px;
+    padding: 9px;
+    background: linear-gradient(160deg, #3A3A3C 0%, #1C1C1E 42%, #000 100%);
+    border-radius: 44px;
+    box-shadow: 0 18px 50px rgba(0,0,0,0.22);
+    transform: rotate(-4deg);
+    overflow: hidden;
+  }
+  .phone img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1170 / 2532;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 35px;
+  }
+</style>
+</head>
+<body>
+  <div class="copy">
+    <img class="mark" src="../assets/Reps-Logo.svg" alt="" />
+    <h1>Never retype your <span>training plan.</span></h1>
+    <p>The workout tracker that reads the PDF your coach already wrote.</p>
+    <ul class="facts">
+      <li>Free while in beta</li>
+      <li>No feed</li>
+      <li>Works offline</li>
+    </ul>
+  </div>
+
+  <div class="art">
+    <div class="phone"><img src="../assets/shots/reps-calc-b.png" alt="" /></div>
+  </div>
+</body>
+</html>
