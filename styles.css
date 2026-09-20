@@ -389,6 +389,9 @@ a { color: inherit; }
   font-weight: 600;
   line-height: 1.08;
   letter-spacing: -0.028em;
+  /* Display type, so it gets balance rather than the paragraph default:
+     at this size an orphaned last line reads as a mistake. */
+  text-wrap: balance;
 }
 
 /* ─────────────────────────────  features  ───────────────────────────── */
