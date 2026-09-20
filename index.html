@@ -88,8 +88,16 @@
           <img src="assets/shots/reps-days.png" alt="" width="1170" height="2532" loading="eager" decoding="async" />
           <span class="phone__sweep" aria-hidden="true"></span>
         </figure>
-        <figure class="phone phone--front">
-          <img src="assets/shots/reps-calc-c.png" alt="" width="1170" height="2532" loading="eager" decoding="async" fetchpriority="high" />
+        <!-- The front phone walks the app: home, the day you tapped into, a set
+             going in, the rest timer, then what it adds up to. Only the first
+             frame is fetched at priority — it is the LCP image; the rest are in
+             the viewport so they still load, just behind it. -->
+        <figure class="phone phone--front phone--stack">
+          <img class="is-on" src="assets/shots/reps-home.webp" alt="" width="1080" height="2404" loading="eager" decoding="async" fetchpriority="high" />
+          <img src="assets/shots/reps-workout.webp" alt="" width="1080" height="2404" loading="lazy" decoding="async" fetchpriority="low" />
+          <img src="assets/shots/reps-log.webp" alt="" width="1080" height="2404" loading="lazy" decoding="async" fetchpriority="low" />
+          <img src="assets/shots/reps-rest.webp" alt="" width="1080" height="2404" loading="lazy" decoding="async" fetchpriority="low" />
+          <img src="assets/shots/reps-progress.webp" alt="" width="1080" height="2404" loading="lazy" decoding="async" fetchpriority="low" />
           <span class="phone__sweep" aria-hidden="true"></span>
         </figure>
       </div>
@@ -101,8 +109,8 @@
     <div class="shell">
       <h2 class="banner__title" id="banner-title">Sound familiar?</h2>
       <p class="banner__claim">
-        Your coach sends a PDF. Your tracker makes you type it all back in
-        before you can log a single rep.
+        Your coach sends a PDF. Everything after that is copying — into a
+        notebook, a spreadsheet, or an app, set by set.
       </p>
     </div>
 

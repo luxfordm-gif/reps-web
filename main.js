@@ -47,7 +47,12 @@
   /* ── hero phones: let the entry animation finish before the float starts,
         otherwise the two animations fight over `transform` ── */
   var art = document.querySelector('.hero__art');
-  if (art) window.setTimeout(function () { art.classList.add('is-float'); }, 1250);
+  if (art) window.setTimeout(function () {
+    art.classList.add('is-float');
+    /* The hero walks through the app on the same mechanism the calculator
+       uses, just slower — it is a tour, not a demonstration. */
+    cycleShots(art, 2600);
+  }, 1250);
 
   /* ── figures and copy play once, when reached ── */
   var reveal = new IntersectionObserver(
@@ -96,9 +101,12 @@
     { oneSide: 80,   withBar: 185, without: 160 },
   ];
 
-  function cycleCalc(fig) {
-    var shots = fig.querySelectorAll('.phone--stack img');
-    var cells = document.querySelectorAll('#calculator .readout__value');
+  /* Cross-fades a .phone--stack through its frames, and hands the new index
+     to whatever else has to move with it. Nothing runs while the tab is
+     hidden: a background tab would otherwise burn through the loop and come
+     back mid-fade. */
+  function cycleShots(scope, ms, onStep) {
+    var shots = scope.querySelectorAll('.phone--stack img');
     if (shots.length < 2) return;
 
     var i = 0;
@@ -107,14 +115,19 @@
       shots[i].classList.remove('is-on');
       i = (i + 1) % shots.length;
       shots[i].classList.add('is-on');
+      if (onStep) onStep(i);
+    }, ms);
+  }
 
-      if (cells.length >= 3) {
-        var load = LOADS[i];
-        animate(cells[0], load.oneSide, load.oneSide % 1 ? 1 : 0, '', 460);
-        animate(cells[1], load.withBar, 0, '', 460);
-        animate(cells[2], load.without, 0, '', 460);
-      }
-    }, 1700);
+  function cycleCalc(fig) {
+    var cells = document.querySelectorAll('#calculator .readout__value');
+    cycleShots(fig, 1700, function (i) {
+      if (cells.length < 3) return;
+      var load = LOADS[i];
+      animate(cells[0], load.oneSide, load.oneSide % 1 ? 1 : 0, '', 460);
+      animate(cells[1], load.withBar, 0, '', 460);
+      animate(cells[2], load.without, 0, '', 460);
+    });
   }
 
   /* The offline card plays its whole story on a loop: three sets logged with
