@@ -8,6 +8,18 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var hasIO = 'IntersectionObserver' in window;
 
+  /* The hero's film autoplays from the markup, so stillness has to be taken
+     away rather than withheld — and before the reduced-motion return below,
+     which is where everything else stops. This script is deferred, so a frame
+     or two may have gone by; winding back to the start leaves the poster's own
+     frame on screen, which is what that reader would have had anyway. */
+  var film = document.querySelector('.phone__film');
+  if (film && reduced) {
+    film.removeAttribute('autoplay');
+    film.pause();
+    film.currentTime = 0;
+  }
+
   /* ── the nav grows a hairline once the page has moved under it ── */
   var nav = document.getElementById('nav');
   if (nav && hasIO) {
@@ -49,12 +61,10 @@
   var art = document.querySelector('.hero__art');
   if (art) window.setTimeout(function () { art.classList.add('is-float'); }, 1250);
 
-  /* The hero's film carries no autoplay attribute, so it starts here or not at
-     all: this whole block is behind the reduced-motion check above, and a
-     reader who asked for stillness keeps the poster. play() rejects when a
-     browser declines to autoplay even a muted video — that is its right, and
-     the poster is already the fallback, so the rejection is swallowed. */
-  var film = document.querySelector('.phone__film');
+  /* The attribute does the starting; this is for the browsers that defer it
+     until the element is on screen, and for coming back from a hidden tab.
+     play() rejects when a browser declines to play even a muted video — that
+     is its right, and the poster is already the fallback. */
   if (film) {
     film.play().catch(function () {});
     /* Nothing to show while the tab is in the background. */
