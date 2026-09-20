@@ -314,20 +314,16 @@ a { color: inherit; }
    the way Apple stages a pair. No rotation at any width.
 
    Every offset runs through --tx/--ty, so one pair of numbers drives the
-   resting layout, the entry animation and the float, and none of them can
-   drift out of step with the others at a breakpoint.
-
-   The pair is centred as a pair: the front sits left of centre by 14% of its
-   own width, and the back sits right of centre by the amount that leaves both
-   outer edges the same distance from the centre line —
-   (0.14 + (1 - 0.92) / 2) / 0.92 ≈ 19.6% of the back phone's own width. That
-   ratio holds at every width, so only the sizes change further down. */
+   resting layout, the entry animation, the float and the reduced-motion
+   fallback. A breakpoint that wants the pair staged differently sets those
+   two and nothing else — before, it had to restate a transform that the
+   animation then overrode. */
 .hero__art { position: relative; display: grid; place-items: center; min-height: clamp(560px, 66vh, 720px); }
 .hero__art .phone { position: absolute; transform: translate(var(--tx, 0), var(--ty, 0)); }
 
 .phone--back {
-  width: 58.9%;                  /* 92% of the front phone, not a miniature */
-  --tx: 19.6%;
+  width: 59%;                    /* ~92% of the front phone, not a miniature */
+  --tx: 38%;
   --ty: 7%;
   opacity: 0.92;
 }
@@ -701,9 +697,13 @@ a { color: inherit; }
    they are capped in pixels here and the copy above them is centred. */
 @media (max-width: 1000px) {
   /* Both phones, upright and stacked: the front one drops into flow so it sets
-     the container's height, the back stays absolute, smaller and behind. Only
-     the sizes change — the --tx/--ty pair above still centres the two as one
-     group, which is what keeps the back phone on screen at this width. */
+     the container's height, the back stays absolute, smaller and behind.
+
+     One column is far narrower than the hero's art half, so the desktop stage
+     runs the back phone off the edge. Pull it in to where the pair's outer
+     edges sit the same distance from the centre line: with the back at 92% of
+     the front, that is (0.14 + (1 - 0.92) / 2) / 0.92 ≈ 19.6% of its own
+     width, and it leaves ~30% of the back phone showing. */
   .hero__art {
     min-height: 0;
     margin-top: 36px;
@@ -714,6 +714,7 @@ a { color: inherit; }
   }
   .hero__art .phone--back {
     width: min(217px, 58.9%);      /* 92% of the front phone */
+    --tx: 19.6%;
   }
 
   /* One column reads better centred, and it balances the phone below it. */
