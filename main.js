@@ -76,7 +76,7 @@
   function cycleCalc(fig) {
     var shots = fig.querySelectorAll('.phone--stack img');
     var cells = document.querySelectorAll('#calculator .readout__value');
-    if (shots.length < 2 || cells.length < 3) return;
+    if (shots.length < 2) return;
 
     var i = 0;
     window.setInterval(function () {
@@ -85,10 +85,12 @@
       i = (i + 1) % shots.length;
       shots[i].classList.add('is-on');
 
-      var load = LOADS[i];
-      animate(cells[0], load.oneSide, load.oneSide % 1 ? 1 : 0, '');
-      animate(cells[1], load.withBar, 0, '');
-      animate(cells[2], load.without, 0, '');
+      if (cells.length >= 3) {
+        var load = LOADS[i];
+        animate(cells[0], load.oneSide, load.oneSide % 1 ? 1 : 0, '');
+        animate(cells[1], load.withBar, 0, '');
+        animate(cells[2], load.without, 0, '');
+      }
     }, 3200);
   }
 

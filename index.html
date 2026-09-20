@@ -199,21 +199,6 @@
           plan is written.
         </p>
 
-        <div class="readout" role="group" aria-label="The three totals Reps shows">
-          <div class="readout__cell">
-            <span class="readout__label">One side</span>
-            <span class="readout__value" data-count="15" data-dp="0">15<span class="readout__unit">kg</span></span>
-          </div>
-          <div class="readout__cell readout__cell--on">
-            <span class="readout__label">With bar</span>
-            <span class="readout__value" data-count="55" data-dp="0">55<span class="readout__unit">kg</span></span>
-          </div>
-          <div class="readout__cell">
-            <span class="readout__label">Without bar</span>
-            <span class="readout__value" data-count="30" data-dp="0">30<span class="readout__unit">kg</span></span>
-          </div>
-        </div>
-
         <ul class="checks">
           <li>Olympic, women’s and easy bars — or set your own</li>
           <li>Plates down to 0.5&nbsp;kg, plus any custom plate</li>
@@ -405,13 +390,17 @@
 
   <!-- ══════════════════════  COMING SOON  ══════════════════════ -->
   <section class="soon" aria-labelledby="soon-title">
-    <div class="shell soon__inner">
-      <p class="soon__tag">Phase two</p>
-      <h2 class="soon__title" id="soon-title">Build your own plan</h2>
-      <p class="soon__sub">
-        Not everyone has a coach. Writing a plan inside Reps — days, exercises,
-        sets and rep ranges — is what we’re building next.
-      </p>
+    <div class="shell">
+      <!-- The card must sit inside .shell, not share the element: .shell puts
+           its gutter *inside* itself, so a background here paints edge to edge. -->
+      <div class="soon__inner">
+        <p class="soon__tag">Phase two</p>
+        <h2 class="soon__title" id="soon-title">Build your own plan</h2>
+        <p class="soon__sub">
+          Not everyone has a coach. Writing a plan inside Reps — days, exercises,
+          sets and rep ranges — is what we’re building next.
+        </p>
+      </div>
     </div>
   </section>
 
