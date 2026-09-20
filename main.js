@@ -109,14 +109,24 @@
     var shots = scope.querySelectorAll('.phone--stack img');
     if (shots.length < 2) return;
 
+    /* A frame can ask for its own dwell with data-ms — the hero's plates pile
+       on in a second each, while the screens worth reading hold for three. */
+    function dwell(n) {
+      return parseInt(shots[n].getAttribute('data-ms'), 10) || ms;
+    }
+
     var i = 0;
-    window.setInterval(function () {
-      if (document.hidden) return;
-      shots[i].classList.remove('is-on');
-      i = (i + 1) % shots.length;
-      shots[i].classList.add('is-on');
-      if (onStep) onStep(i);
-    }, ms);
+    (function next() {
+      window.setTimeout(function () {
+        if (!document.hidden) {
+          shots[i].classList.remove('is-on');
+          i = (i + 1) % shots.length;
+          shots[i].classList.add('is-on');
+          if (onStep) onStep(i);
+        }
+        next();
+      }, dwell(i));
+    })();
   }
 
   function cycleCalc(fig) {
