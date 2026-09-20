@@ -29,39 +29,33 @@
     flex-direction: column;
     justify-content: center;
   }
-  .mark { height: 26px; width: auto; margin-bottom: 40px; }
+  /* Explicit width + flex-start, or the stretched box centres the SVG. */
+  .mark { width: 143px; height: auto; align-self: flex-start; margin-bottom: 44px; }
 
   h1 {
-    font-size: 66px;
+    font-size: 76px;
     font-weight: 600;
-    line-height: 1.06;
-    letter-spacing: -0.03em;
+    line-height: 1.04;
+    letter-spacing: -0.032em;
     max-width: 11ch;
   }
   h1 span { color: #8E8E93; }
 
-  p {
-    margin-top: 24px;
-    font-size: 23px;
-    line-height: 1.4;
-    color: #6E6E73;
-    max-width: 27ch;
-  }
 
   .facts {
     display: flex;
     gap: 26px;
-    margin-top: 40px;
-    padding-top: 26px;
+    margin-top: 44px;
+    padding-top: 28px;
     border-top: 1px solid #E5E5EA;
-    font-size: 17px;
+    font-size: 21px;
     color: #6E6E73;
     list-style: none;
   }
-  .facts li { display: flex; align-items: center; gap: 9px; }
+  .facts li { display: flex; align-items: center; gap: 10px; }
   .facts li::before {
     content: "";
-    width: 5px; height: 5px;
+    width: 6px; height: 6px;
     border-radius: 50%;
     background: #8E8E93;
   }
@@ -93,8 +87,7 @@
 <body>
   <div class="copy">
     <img class="mark" src="../assets/Reps-Logo.svg" alt="" />
-    <h1>Never retype your <span>training plan.</span></h1>
-    <p>The workout tracker that reads the PDF your coach already wrote.</p>
+    <h1>Never retype your <span>training plan again.</span></h1>
     <ul class="facts">
       <li>Free while in beta</li>
       <li>No feed</li>
