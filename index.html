@@ -85,19 +85,24 @@
 
       <div class="hero__art" aria-hidden="true">
         <figure class="phone phone--back">
-          <img src="assets/shots/reps-days.png" alt="" width="1170" height="2532" loading="eager" decoding="async" />
+          <img src="assets/shots/reps-days.webp" alt="" width="1170" height="2367" loading="eager" decoding="async" />
           <span class="phone__sweep" aria-hidden="true"></span>
         </figure>
-        <!-- The front phone walks the app: home, the day you tapped into, a set
-             going in, the rest timer, then what it adds up to. Only the first
-             frame is fetched at priority — it is the LCP image; the rest are in
-             the viewport so they still load, just behind it. -->
+        <!-- The front phone walks the app the way you would use it: home, the
+             progress tab and its charts, into a day, the calculator building a
+             load plate by plate, the set going in, the rest timer — then back
+             to home as the loop wraps. Each frame carries its own dwell, so
+             the plates pile on quickly and the screens worth reading hold.
+             Only the first is fetched at priority: it is the LCP image. -->
         <figure class="phone phone--front phone--stack">
-          <img class="is-on" src="assets/shots/reps-home.webp" alt="" width="1080" height="2242" loading="eager" decoding="async" fetchpriority="high" />
-          <img src="assets/shots/reps-workout.webp" alt="" width="1080" height="2242" loading="lazy" decoding="async" fetchpriority="low" />
-          <img src="assets/shots/reps-log.webp" alt="" width="1080" height="2242" loading="lazy" decoding="async" fetchpriority="low" />
-          <img src="assets/shots/reps-rest.webp" alt="" width="1080" height="2242" loading="lazy" decoding="async" fetchpriority="low" />
-          <img src="assets/shots/reps-progress.webp" alt="" width="1080" height="2242" loading="lazy" decoding="async" fetchpriority="low" />
+          <img class="is-on" data-ms="2800" src="assets/shots/reps-home.webp" alt="" width="1080" height="2185" loading="eager" decoding="async" fetchpriority="high" />
+          <img data-ms="3000" src="assets/shots/reps-progress.webp" alt="" width="1080" height="2185" loading="lazy" decoding="async" fetchpriority="low" />
+          <img data-ms="2200" src="assets/shots/reps-workout.webp" alt="" width="1080" height="2185" loading="lazy" decoding="async" fetchpriority="low" />
+          <img data-ms="1000" src="assets/shots/reps-calc-a.webp" alt="" width="1170" height="2367" loading="lazy" decoding="async" fetchpriority="low" />
+          <img data-ms="1000" src="assets/shots/reps-calc-b.webp" alt="" width="1170" height="2367" loading="lazy" decoding="async" fetchpriority="low" />
+          <img data-ms="1900" src="assets/shots/reps-calc-c.webp" alt="" width="1170" height="2367" loading="lazy" decoding="async" fetchpriority="low" />
+          <img data-ms="2400" src="assets/shots/reps-log.webp" alt="" width="1080" height="2185" loading="lazy" decoding="async" fetchpriority="low" />
+          <img data-ms="2400" src="assets/shots/reps-rest.webp" alt="" width="1080" height="2185" loading="lazy" decoding="async" fetchpriority="low" />
           <span class="phone__sweep" aria-hidden="true"></span>
         </figure>
       </div>
@@ -163,7 +168,7 @@
     <div class="shell feature__inner">
       <figure class="panel" data-anim="days">
         <div class="phone phone--static">
-          <img src="assets/shots/reps-days.png" alt="The Reps home screen listing three training days — Push marked ‘Up next’, Pull, and Legs marked complete — each with its body parts and exercise count." width="1170" height="2532" loading="lazy" decoding="async" />
+          <img src="assets/shots/reps-days.webp" alt="The Reps home screen listing three training days — Push marked ‘Up next’, Pull, and Legs marked complete — each with its body parts and exercise count." width="1170" height="2367" loading="lazy" decoding="async" />
           <span class="phone__sweep" aria-hidden="true"></span>
         </div>
       </figure>
@@ -189,9 +194,9 @@
     <div class="shell feature__inner">
       <figure class="panel" data-anim="calc">
         <div class="phone phone--static phone--stack">
-          <img class="is-on" src="assets/shots/reps-calc-a.png" alt="The Reps barbell calculator with a light load: 15 kg a side, 55 kg with the bar." width="1170" height="2532" loading="lazy" decoding="async" />
-          <img src="assets/shots/reps-calc-b.png" alt="" aria-hidden="true" width="1170" height="2532" loading="lazy" decoding="async" />
-          <img src="assets/shots/reps-calc-c.png" alt="" aria-hidden="true" width="1170" height="2532" loading="lazy" decoding="async" />
+          <img class="is-on" src="assets/shots/reps-calc-a.webp" alt="The Reps barbell calculator with a light load: 15 kg a side, 55 kg with the bar." width="1170" height="2367" loading="lazy" decoding="async" />
+          <img src="assets/shots/reps-calc-b.webp" alt="" aria-hidden="true" width="1170" height="2367" loading="lazy" decoding="async" />
+          <img src="assets/shots/reps-calc-c.webp" alt="" aria-hidden="true" width="1170" height="2367" loading="lazy" decoding="async" />
           <span class="phone__sweep" aria-hidden="true"></span>
         </div>
       </figure>
