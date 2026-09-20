@@ -28,6 +28,10 @@
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" />
 <link rel="apple-touch-icon" href="assets/icon-180.png" />
 <script>document.documentElement.classList.add('js');</script>
+<!-- The hero's first frame, fetched ahead of everything else: it is what the
+     phone shows until the film has enough of itself to play, and on a slow
+     connection it may be all anyone sees for a while. -->
+<link rel="preload" as="image" href="assets/shots/reps-tour-poster.webp" type="image/webp" fetchpriority="high" />
 <link rel="preconnect" href="https://api.fontshare.com" />
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=general-sans@400,500,600&display=swap" />
