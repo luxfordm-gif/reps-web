@@ -216,7 +216,12 @@ a { color: inherit; }
 
 .nav__inner { display: flex; align-items: center; gap: 32px; height: 72px; }
 
-.nav__brand { display: flex; align-items: center; flex: none; }
+.nav__brand {
+  display: flex;
+  align-items: center;
+  flex: none;
+  min-height: 44px;              /* the mark is 22px tall; the target is not */
+}
 .nav__brand img { width: auto; height: 22px; }
 
 /* The wordmark ships as solid black, so it disappears on a dark page.
@@ -683,10 +688,38 @@ a { color: inherit; }
    percentages, so once the hero is one column they size off its full width and
    ride up over the copy. One phone, in flow, from the same breakpoint. */
 @media (max-width: 1000px) {
-  .hero__art { position: static; display: block; min-height: 0; margin-top: 44px; }
-  .hero__art .phone { position: static; }
-  .phone--back { display: none; }
-  .phone--front { width: min(300px, 78%); margin-inline: auto; transform: none; }
+  /* Both phones, upright and stacked: the front one sits in flow so it sets
+     the container's height, the second is absolute, smaller and behind. */
+  .hero__art {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    min-height: 0;
+    margin-top: 36px;
+  }
+  .hero__art .phone--front {
+    position: relative;            /* in flow: it sets the container's height */
+    z-index: 2;
+    width: min(236px, 62%);
+    margin-inline: 0;
+    transform: none;
+  }
+  .hero__art .phone--back {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    width: min(196px, 52%);
+    transform: translate(-16%, -54%);
+    opacity: 0.85;
+  }
+
+  /* One column reads better centred, and it balances the phone below it. */
+  .hero__copy { text-align: center; }
+  .hero__sub { margin-inline: auto; }
+  .hero__actions { justify-content: center; }
+  .hero__facts { justify-content: center; }
 }
 
 @media (max-width: 560px) {
@@ -696,17 +729,19 @@ a { color: inherit; }
   .hero__title { font-size: clamp(34px, 9.5vw, 46px); }
   .hero__actions .btn { flex: 1 1 100%; }
 
-  /* Square card, phone cropped at the bottom edge. Panels holding a card
-     rather than a screen have nothing to crop, so they keep their own height. */
-  .panel:has(.phone) {
-    aspect-ratio: 1 / 1;
+  /* One height for every section image, so the column reads evenly. 2/3 gives
+     511px at this width: deep enough to show a useful slice of a phone, and
+     still taller than the biggest card (the stat grid needs 471). */
+  .panel {
+    aspect-ratio: 2 / 3;
     min-height: 0;
-    place-items: start center;
-    padding: 26px 20px 0;
     overflow: hidden;
   }
+  /* A phone is cropped at the bottom; a card sits centred with room to spare. */
+  .panel:has(.phone) { place-items: start center; padding: 26px 20px 0; }
   .panel:has(.offline-card),
-  .panel:has(.stat-grid) { min-height: 0; padding: 30px 20px; }
+  .panel:has(.stat-grid),
+  .panel:has(.pegs) { place-items: center; padding: 26px 20px; }
 
   .readout { grid-template-columns: 1fr; }
   .readout__cell { display: flex; align-items: baseline; justify-content: space-between; }
@@ -724,7 +759,6 @@ a { color: inherit; }
   .soon__inner { padding: 34px 26px; }
   .card { padding: 24px 22px; }
   .how__card { padding: 22px; }
-  .faq__item { padding: 20px 0; }
   .offline-card { padding: 22px; }
   .pegs { padding: 22px; }
 }
@@ -1158,21 +1192,67 @@ a { color: inherit; }
 .faq__copy a:hover,
 .faq__list a:hover { color: var(--muted-text); }
 
-.faq__list { margin: 0; }
-.faq__item { padding: 22px 0; border-top: 1px solid var(--line); }
-.faq__item:last-child { border-bottom: 1px solid var(--line); }
+/* Accordion, built on <details> so it opens without JavaScript and keeps
+   keyboard and screen-reader behaviour for free. */
+.faq__list { display: grid; gap: 10px; }
 
-.faq__list dt {
-  font-size: 18px;
+.faq__item {
+  background: var(--panel);
+  border-radius: var(--r-panel);
+  overflow: hidden;
+}
+
+.faq__item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 60px;
+  padding: 16px 20px;
+  font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.01em;
+  cursor: pointer;
+  list-style: none;                /* the default marker, replaced by our own */
+  transition: color var(--t-press) var(--e-snap);
 }
-.faq__list dd {
-  margin: 8px 0 0;
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary:hover { color: var(--muted-text); }
+.faq__item summary:focus-visible { outline-offset: -3px; }
+
+/* A plus drawn from two bars; the vertical one rotates away when open. */
+.faq__icon {
+  position: relative;
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+.faq__icon::before,
+.faq__icon::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto 0;
+  height: 2px;
+  margin-top: -1px;
+  border-radius: 2px;
+  background: var(--ink);
+  transition: transform var(--t-pop) var(--e-snap);
+}
+.faq__icon::after { transform: rotate(90deg); }
+.faq__item[open] .faq__icon::after { transform: rotate(0deg); }
+
+.faq__answer { padding: 0 20px 20px; }
+.faq__answer p {
+  margin: 0;
   font-size: 16px;
   line-height: 1.5;
   color: var(--muted-text);
   max-width: 52ch;
+}
+.faq__item[open] .faq__answer { animation: faq-open 260ms var(--e-snap); }
+@keyframes faq-open {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: none; }
 }
 
 @media (max-width: 1000px) {
@@ -1205,9 +1285,19 @@ a { color: inherit; }
 }
 
 .why__body {
+  text-wrap: balance;
   margin: 20px 0 0;
   font-size: 18px;
   line-height: 1.5;
   color: var(--muted-text);
 }
 
+
+/* ── late overrides ───────────────────────────────────────────────────────
+   These sit at the end because the rules they override are declared later in
+   the file than the breakpoint blocks above, and a media query carries no
+   extra specificity. */
+@media (max-width: 560px) {
+  .stat__label,
+  .pegs__total-label { font-size: 12px; }
+}
