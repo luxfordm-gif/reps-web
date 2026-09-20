@@ -397,6 +397,43 @@
           Not everyone has a coach. Writing a plan inside Reps — days, exercises,
           sets and rep ranges — is what we’re building next.
         </p>
+
+        <!-- The form lives behind its own button, so the section stays a
+             sentence until someone asks for it. <details> does the toggling
+             natively: no script, and it still opens with JavaScript off. -->
+        <details class="notify">
+          <summary class="btn btn--primary notify__open">Email me when it lands</summary>
+
+          <form
+            class="request notify__form"
+            name="notify"
+            method="POST"
+            action="/thanks-notify.html"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+          >
+            <input type="hidden" name="form-name" value="notify" />
+            <p class="request__trap" aria-hidden="true">
+              <label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+            </p>
+
+            <div class="request__field">
+              <label for="notify-email">Email</label>
+              <input id="notify-email" name="email" type="email" autocomplete="email" required />
+            </div>
+
+            <label class="request__check">
+              <input type="checkbox" name="storage-ok" value="yes" required />
+              <span>I’m happy for Reps to store this email address so it can tell me when phase two lands</span>
+            </label>
+
+            <button class="btn btn--primary request__submit" type="submit">Notify me</button>
+            <p class="request__fine">
+              One email, when it ships — nothing else, and no ads. Ask me any
+              time and I’ll delete the address.
+            </p>
+          </form>
+        </details>
       </div>
     </div>
   </section>

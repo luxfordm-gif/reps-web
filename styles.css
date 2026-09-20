@@ -1113,6 +1113,30 @@ a { color: inherit; }
   text-transform: uppercase;
   color: var(--muted-text);
 }
+/* ── phase two: the form is behind its own button ───────────────────────── */
+.notify { margin-top: 28px; }
+
+/* .btn already sets inline-flex, which is enough to drop the marker in most
+   engines; the other two lines are for the ones where it is not. */
+.notify__open {
+  list-style: none;
+  cursor: pointer;
+}
+.notify__open::-webkit-details-marker { display: none; }
+.notify__open::marker { content: ""; }
+
+/* Once it is open the button has done its job, so it steps back to an outline
+   and keeps working as the way to close it again. */
+.notify[open] .notify__open {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+.notify[open] .notify__open:hover { background: var(--surface); border-color: var(--muted); }
+
+.notify__form { margin-top: 24px; }
+.notify[open] .notify__form { animation: faq-open 260ms var(--e-snap); }
+
 .soon__title {
   margin: 12px 0 0;
   font-size: clamp(26px, 3vw, 38px);
@@ -1416,12 +1440,24 @@ a { color: inherit; }
    Posts to Netlify Forms. Submissions land in the Netlify UI; turn on the
    email notification under Forms → Settings, or nothing will reach an inbox. */
 
+/* The form is used twice — on the black CTA band and on the light phase-two
+   panel — so its colours come from three local properties rather than the
+   inverted palette directly. The band re-points them just below. */
 .request {
+  --form-ink: var(--ink);
+  --form-muted: var(--muted-text);
+  --form-line: var(--line);
+
   display: grid;
   gap: 14px;
   width: min(420px, 100%);
   margin: 36px auto 0;
   text-align: left;
+}
+.cta .request {
+  --form-ink: var(--on-ink);
+  --form-muted: var(--on-ink-muted);
+  --form-line: var(--on-ink-line);
 }
 
 /* The honeypot: a real field, hidden from people, catching bots that fill
@@ -1441,7 +1477,7 @@ a { color: inherit; }
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--on-ink-muted);
+  color: var(--form-muted);
 }
 .request__field input {
   width: 100%;
@@ -1449,18 +1485,18 @@ a { color: inherit; }
   padding: 0 16px;
   font: inherit;
   font-size: 16px;                /* 16px or iOS zooms the page on focus */
-  color: var(--on-ink);
+  color: var(--form-ink);
   background: transparent;
-  border: 1px solid var(--on-ink-line);
+  border: 1px solid var(--form-line);
   border-radius: var(--r-control);
   transition: border-color var(--t-press) var(--e-snap);
 }
-.request__field input:hover { border-color: var(--on-ink-muted); }
+.request__field input:hover { border-color: var(--form-muted); }
 .request__field input:focus {
   outline: none;
-  border-color: var(--on-ink);
+  border-color: var(--form-ink);
 }
-.request__field input:focus-visible { outline: 2px solid var(--on-ink); outline-offset: 2px; }
+.request__field input:focus-visible { outline: 2px solid var(--form-ink); outline-offset: 2px; }
 
 .request__check {
   display: grid;
@@ -1471,17 +1507,17 @@ a { color: inherit; }
   padding: 4px 0;
   font-size: 15px;
   line-height: 1.4;
-  color: var(--on-ink-muted);
+  color: var(--form-muted);
   cursor: pointer;
 }
 .request__check input {
   width: 22px;
   height: 22px;
   margin: 0;
-  accent-color: var(--on-ink);
+  accent-color: var(--form-ink);
   cursor: pointer;
 }
-.request__check:hover { color: var(--on-ink); }
+.request__check:hover { color: var(--form-ink); }
 
 .request__submit { width: 100%; margin-top: 8px; }
 
@@ -1489,7 +1525,7 @@ a { color: inherit; }
   margin: 0;
   font-size: 13px;
   line-height: 1.5;
-  color: var(--on-ink-muted);
+  color: var(--form-muted);
   text-align: center;
 }
 
