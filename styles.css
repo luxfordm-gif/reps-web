@@ -351,7 +351,11 @@ a { color: inherit; }
 }
 .phone img {
   width: 100%;
-  aspect-ratio: 1170 / 2532;     /* iPhone. Guards against an odd-sized capture. */
+  /* The glass is the shape of the screens it holds, not of a borrowed device.
+     Every capture is 1080/2185 (Android, both system bars removed) or cropped
+     to match, so nothing is scaled off the sides and each screen keeps the
+     margins the app draws. Guards against an odd-sized capture too. */
+  aspect-ratio: 1080 / 2185;
   object-fit: cover;
   object-position: top;
   /* The frame's radius less its 10px bezel, so the glass sits concentric
