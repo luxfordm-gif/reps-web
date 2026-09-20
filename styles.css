@@ -133,7 +133,7 @@ h1, h2, h3 { margin: 0; font-weight: 600; line-height: 1.2; }
 
 a { color: inherit; }
 
-:where(a, button, [tabindex]):focus-visible {
+:where(a, button, summary, [tabindex]):focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 3px;
   border-radius: 4px;
@@ -1234,7 +1234,14 @@ a { color: inherit; }
 }
 .faq__item summary::-webkit-details-marker { display: none; }
 .faq__item summary:hover { color: var(--muted-text); }
-.faq__item summary:focus-visible { outline-offset: -3px; }
+.faq__item summary { -webkit-tap-highlight-color: transparent; }
+/* No ring for a mouse click; :focus-visible still covers the keyboard. */
+.faq__item summary:focus { outline: none; }
+.faq__item summary:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -3px;
+  border-radius: var(--r-panel);
+}
 
 /* A plus drawn from two bars; the vertical one rotates away when open. */
 .faq__icon {

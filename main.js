@@ -20,7 +20,7 @@
     }).observe(sentinel);
   }
 
-  /* ── FAQ: open on desktop, closed on a phone ──
+  /* ── FAQ: first answer open on desktop, all closed on a phone ──
      Deliberately above the reduced-motion return: this is layout, not motion,
      and someone who has asked for less movement still wants the answers open
      on a wide screen. Matches the 1000px breakpoint the FAQ lays out on.
@@ -28,8 +28,10 @@
   var wide = window.matchMedia('(min-width: 1001px)');
   var faqs = document.querySelectorAll('.faq__item');
 
+  // Desktop opens the first answer only — enough to show the section is
+  // readable without dumping every answer on the page at once.
   function syncFaq(mq) {
-    for (var i = 0; i < faqs.length; i++) faqs[i].open = mq.matches;
+    for (var i = 0; i < faqs.length; i++) faqs[i].open = mq.matches && i === 0;
   }
 
   if (faqs.length) {
