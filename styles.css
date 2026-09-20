@@ -316,8 +316,8 @@ a { color: inherit; }
 .hero__art .phone { position: absolute; }
 
 .phone--back {
-  width: 54%;
-  transform: translate(34%, 6%);
+  width: 59%;                    /* ~92% of the front phone, not a miniature */
+  transform: translate(38%, 7%);
   opacity: 0.92;
 }
 .phone--front {
@@ -709,11 +709,11 @@ a { color: inherit; }
     display: block;
     position: absolute;
     z-index: 1;
-    top: 50%;
+    top: 0;
     left: 50%;
-    width: min(196px, 52%);
-    transform: translate(-16%, -54%);
-    opacity: 0.85;
+    width: min(218px, 57%);      /* ~92% of the front phone */
+    transform: translate(-6%, 6%);
+    opacity: 0.9;
   }
 
   /* One column reads better centred, and it balances the phone below it. */
@@ -854,7 +854,7 @@ a { color: inherit; }
   to   { opacity: var(--end-opacity, 1); transform: translate(var(--tx, 0), var(--ty, 0)) rotate(var(--rot, 0deg)); }
 }
 
-.phone--back  { --tx: 34%; --ty: 6%;  --rot: 0deg; --end-opacity: 0.92; }
+.phone--back  { --tx: 38%; --ty: 7%;  --rot: 0deg; --end-opacity: 0.92; }
 .phone--front { --tx: -14%; --ty: -2%; --rot: 0deg; }
 
 /* A slow float, so the hero is never quite still. */
@@ -867,8 +867,8 @@ a { color: inherit; }
   50%      { transform: translate(-14%, -3.4%); }
 }
 @keyframes float-b {
-  0%, 100% { transform: translate(34%, 6%); }
-  50%      { transform: translate(34%, 4.6%); }
+  0%, 100% { transform: translate(38%, 7%); }
+  50%      { transform: translate(38%, 5.6%); }
 }
 
 /* ── a light sweep passes over each screen once, when it arrives ── */
@@ -1060,7 +1060,7 @@ a { color: inherit; }
   }
   .peg__fill { width: var(--w, 100%) !important; animation: none !important; }
   .phone__sweep { display: none; }
-  .phone--back  { opacity: 0.92 !important; transform: translate(34%, 6%) !important; }
+  .phone--back  { opacity: 0.92 !important; transform: translate(38%, 7%) !important; }
   .phone--front { transform: translate(-14%, -2%) !important; }
 }
 
@@ -1317,3 +1317,109 @@ a { color: inherit; }
   .stat__label,
   .pegs__total-label { font-size: 12px; }
 }
+
+/* ═══════════════════════════  REQUEST FORM  ═══════════════════════════
+   Posts to Netlify Forms. Submissions land in the Netlify UI; turn on the
+   email notification under Forms → Settings, or nothing will reach an inbox. */
+
+.request {
+  display: grid;
+  gap: 14px;
+  width: min(420px, 100%);
+  margin: 36px auto 0;
+  text-align: left;
+}
+
+/* The honeypot: a real field, hidden from people, catching bots that fill
+   everything. Not display:none — some bots skip those. */
+.request__trap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.request__field { display: grid; gap: 7px; }
+.request__field label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--on-ink-muted);
+}
+.request__field input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  font: inherit;
+  font-size: 16px;                /* 16px or iOS zooms the page on focus */
+  color: var(--on-ink);
+  background: transparent;
+  border: 1px solid var(--on-ink-line);
+  border-radius: var(--r-control);
+  transition: border-color var(--t-press) var(--e-snap);
+}
+.request__field input:hover { border-color: var(--on-ink-muted); }
+.request__field input:focus {
+  outline: none;
+  border-color: var(--on-ink);
+}
+.request__field input:focus-visible { outline: 2px solid var(--on-ink); outline-offset: 2px; }
+
+.request__check {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 12px;
+  align-items: start;
+  min-height: 44px;
+  padding: 4px 0;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--on-ink-muted);
+  cursor: pointer;
+}
+.request__check input {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: var(--on-ink);
+  cursor: pointer;
+}
+.request__check:hover { color: var(--on-ink); }
+
+.request__submit { width: 100%; margin-top: 8px; }
+
+.request__fine {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--on-ink-muted);
+  text-align: center;
+}
+
+/* ── thank-you page ── */
+.thanks {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 40px var(--gutter);
+  text-align: center;
+}
+.thanks__inner { max-width: 44ch; }
+.thanks__mark { width: 128px; height: auto; margin: 0 auto 36px; }
+.thanks h1 {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 5vw, 46px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+.thanks p { margin: 18px 0 0; font-size: 18px; color: var(--muted-text); }
+.thanks .btn { margin-top: 34px; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .thanks__mark { filter: invert(1); }
+}
+:root[data-theme="dark"] .thanks__mark { filter: invert(1); }

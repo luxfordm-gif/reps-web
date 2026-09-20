@@ -70,5 +70,10 @@ node tools/shoot-og.mjs      # in another
 - Body text runs at 4.86:1 on light and 7.44:1 on dark.
 - All motion is behind `prefers-reduced-motion`, and anything JS animates is
   hidden only under a `.js` class, so the page is complete without scripting.
-- The three "Join for free" CTAs point at the live app,
-  <https://reps-lux.netlify.app/>.
+- Access is by request. The CTAs point at the form in `#request`, which posts
+  to **Netlify Forms** (form name: `access`). The app URL is deliberately not
+  on the site — signup in the app is open, so a link would be an open door.
+
+  **Turn on the email notification** in Netlify → Forms → Settings, or
+  submissions sit in the dashboard and nobody hears about them. The CSP sets
+  `form-action 'self'`; tightening it back to `'none'` breaks the form.

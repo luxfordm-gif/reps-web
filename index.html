@@ -51,7 +51,7 @@
       <a href="#more">More</a>
     </nav>
 
-    <a class="btn btn--primary btn--sm nav__cta" href="https://reps-lux.netlify.app/" target="_blank" rel="noopener">Join for free</a>
+    <a class="btn btn--primary btn--sm nav__cta" href="#request">Request access</a>
   </div>
 </header>
 
@@ -72,7 +72,7 @@
         </p>
 
         <div class="hero__actions">
-          <a class="btn btn--primary" href="https://reps-lux.netlify.app/" target="_blank" rel="noopener">Join for free</a>
+          <a class="btn btn--primary" href="#request">Request access</a>
           <a class="btn btn--ghost" href="#how">See everything it does</a>
         </div>
 
@@ -418,10 +418,10 @@
         </details>
         <details class="faq__item">
           <summary>
-            <span>Do I need an account?</span>
+            <span>How do I get in?</span>
             <span class="faq__icon" aria-hidden="true"></span>
           </summary>
-          <div class="faq__answer"><p>An email and a password, so your history survives a new phone. Nothing else, and no social login to untangle later.</p></div>
+          <div class="faq__answer"><p>Ask for a place using the form at the bottom of this page. Reps is a small beta, so I send the link out myself rather than leaving signup open. Once you’re in it’s an email and a password — nothing else, and no social login to untangle later.</p></div>
         </details>
         <details class="faq__item">
           <summary>
@@ -448,19 +448,54 @@
     </div>
   </section>
 
-  <!-- ══════════════════════  INSTALL  ══════════════════════ -->
-  <section class="cta" id="install">
+  <!-- ══════════════════════  REQUEST ACCESS  ══════════════════════ -->
+  <section class="cta" id="request">
     <div class="shell cta__inner">
-      <h2 class="cta__title">Put it on your home screen</h2>
+      <h2 class="cta__title">Ask for a place in the beta</h2>
       <p class="cta__sub">
-        Reps is a web app — no store, no download, no review queue. Open it in your
-        browser, add it to your home screen, and it runs full-screen and offline
-        from then on.
+        Reps isn’t open to everyone yet. Tell me a little about your training and
+        I’ll send you the link myself — it’s a small beta, so I’d rather help a
+        few people properly than let hundreds in at once.
       </p>
-      <div class="cta__actions">
-        <a class="btn btn--invert" href="https://reps-lux.netlify.app/" target="_blank" rel="noopener">Join for free</a>
-      </div>
-      <p class="cta__fine">Works on iPhone and Android. Free while Reps is in beta, with no ads.</p>
+
+      <form
+        class="request"
+        name="access"
+        method="POST"
+        action="/thanks.html"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+      >
+        <input type="hidden" name="form-name" value="access" />
+        <p class="request__trap" aria-hidden="true">
+          <label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+        </p>
+
+        <div class="request__field">
+          <label for="req-name">Your name</label>
+          <input id="req-name" name="name" type="text" autocomplete="name" required />
+        </div>
+
+        <div class="request__field">
+          <label for="req-email">Email</label>
+          <input id="req-email" name="email" type="email" autocomplete="email" required />
+        </div>
+
+        <label class="request__check">
+          <input type="checkbox" name="has-plan" value="yes" required />
+          <span>I have a training plan as a PDF from a coach or trainer</span>
+        </label>
+
+        <label class="request__check">
+          <input type="checkbox" name="contact-ok" value="yes" required />
+          <span>I’m happy to be emailed about getting access</span>
+        </label>
+
+        <button class="btn btn--invert request__submit" type="submit">Request access</button>
+        <p class="request__fine">
+          Your details go to me and nowhere else. Free while Reps is in beta, with no ads.
+        </p>
+      </form>
     </div>
   </section>
 
