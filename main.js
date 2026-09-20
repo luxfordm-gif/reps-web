@@ -20,6 +20,26 @@
     }).observe(sentinel);
   }
 
+  /* ── FAQ: open on desktop, closed on a phone ──
+     Deliberately above the reduced-motion return: this is layout, not motion,
+     and someone who has asked for less movement still wants the answers open
+     on a wide screen. Matches the 1000px breakpoint the FAQ lays out on.
+     Without JavaScript they stay closed, which is still perfectly usable. */
+  var wide = window.matchMedia('(min-width: 1001px)');
+  var faqs = document.querySelectorAll('.faq__item');
+
+  function syncFaq(mq) {
+    for (var i = 0; i < faqs.length; i++) faqs[i].open = mq.matches;
+  }
+
+  if (faqs.length) {
+    syncFaq(wide);
+    // Only fires when the breakpoint is actually crossed, so a reader's own
+    // open/closed choices survive an ordinary resize.
+    if (wide.addEventListener) wide.addEventListener('change', syncFaq);
+    else if (wide.addListener) wide.addListener(syncFaq);
+  }
+
   if (reduced || !hasIO) return;
 
   /* ── hero phones: let the entry animation finish before the float starts,
