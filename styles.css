@@ -948,6 +948,9 @@ a { color: inherit; }
 /* Without scripting the first frame stays visible and the rest never
    appear, which is exactly the static fallback we want. */
 .phone--stack img { grid-area: 1 / 1; opacity: 0; transition: opacity 340ms var(--e-snap); }
+/* The hero is a walk through the app rather than a demonstration of one
+   control, so it changes more slowly and fades for longer. */
+.hero__art .phone--stack img { transition-duration: 620ms; }
 :root:not(.js) .phone--stack img:first-child { opacity: 1; }
 .phone--stack img.is-on { opacity: 1; }
 
