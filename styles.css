@@ -198,9 +198,6 @@ a { color: inherit; }
 }
 .btn--outline-invert:hover { border-color: var(--on-ink); }
 
-/* A CTA that isn't wired up yet shouldn't look or behave like a live one. */
-.btn[aria-disabled="true"] { opacity: 0.55; pointer-events: none; }
-
 .btn--sm { min-height: 44px; padding: 0 18px; font-size: 15px; }
 
 /* ─────────────────────────────  nav  ───────────────────────────── */

@@ -55,4 +55,5 @@ Stagger indices live in `styles.css` as `:nth-child` rules rather than
 - Body text runs at 4.86:1 on light and 7.44:1 on dark.
 - All motion is behind `prefers-reduced-motion`, and anything JS animates is
   hidden only under a `.js` class, so the page is complete without scripting.
-- The "Join for free" CTA is still `href="#"`, pending the deployed app URL.
+- The three "Join for free" CTAs point at the live app,
+  <https://reps-lux.netlify.app/>.
