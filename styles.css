@@ -349,7 +349,8 @@ a { color: inherit; }
   border-radius: 13.8% / 6.6%;
   box-shadow: var(--sh-lift), 0 0 0 1px rgba(0,0,0,0.5);
 }
-.phone img {
+.phone img,
+.phone__film {
   width: 100%;
   /* The glass is the shape of the screens it holds, not of a borrowed device.
      Every capture is 1080/2185 (Android, both system bars removed) or cropped
@@ -362,6 +363,18 @@ a { color: inherit; }
      inside the shell at every size. */
   border-radius: calc(13.8% - 7px) / calc(6.38% - 7px);
   background: var(--paper-card);
+}
+
+/* The hero's recording of the app takes that same glass — same corner, same
+   fit — at its own ratio: it is the raw 1080x2125 of app, with none of the
+   bottom padding the stills carry. */
+.phone__film {
+  display: block;
+  /* A video's width/height attributes land as CSS width/height, unlike an
+     image's — without this the intrinsic 1062px wins over the ratio and the
+     phone grows to the height of the file. */
+  height: auto;
+  aspect-ratio: 540 / 1062;
 }
 
 .phone--static { width: min(276px, 100%); }

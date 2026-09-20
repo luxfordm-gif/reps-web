@@ -47,12 +47,22 @@
   /* ── hero phones: let the entry animation finish before the float starts,
         otherwise the two animations fight over `transform` ── */
   var art = document.querySelector('.hero__art');
-  if (art) window.setTimeout(function () {
-    art.classList.add('is-float');
-    /* The hero walks through the app on the same mechanism the calculator
-       uses, just slower — it is a tour, not a demonstration. */
-    cycleShots(art, 2600);
-  }, 1250);
+  if (art) window.setTimeout(function () { art.classList.add('is-float'); }, 1250);
+
+  /* The hero's film carries no autoplay attribute, so it starts here or not at
+     all: this whole block is behind the reduced-motion check above, and a
+     reader who asked for stillness keeps the poster. play() rejects when a
+     browser declines to autoplay even a muted video — that is its right, and
+     the poster is already the fallback, so the rejection is swallowed. */
+  var film = document.querySelector('.phone__film');
+  if (film) {
+    film.play().catch(function () {});
+    /* Nothing to show while the tab is in the background. */
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) film.pause();
+      else film.play().catch(function () {});
+    });
+  }
 
   /* ── figures and copy play once, when reached ── */
   var reveal = new IntersectionObserver(
