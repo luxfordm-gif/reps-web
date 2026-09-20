@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Reps — the workout tracker that reads your training plan</title>
+<meta name="description" content="Upload the PDF your coach wrote and Reps turns it into a workout you log set by set. It does the plate maths, remembers what your gym’s machines really weigh, and works with no signal. Free while it’s in beta." />
+<meta name="theme-color" content="#FAFAFA" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)" />
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" />
+<link rel="apple-touch-icon" href="assets/icon-180.png" />
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=general-sans@400,500,600&display=swap" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="shell nav__inner">
+    <a class="nav__brand" href="#main" aria-label="Reps — home">
+      <img src="assets/Reps-Logo.svg" alt="" width="669" height="122" />
+    </a>
+
+    <nav class="nav__links" aria-label="Sections">
+      <a href="#how">How it works</a>
+      <a href="#calculator">Calculator</a>
+      <a href="#offline">Offline</a>
+      <a href="#progress">Progress</a>
+      <a href="#more">More</a>
+    </nav>
+
+    <a class="btn btn--primary btn--sm nav__cta" href="#install">Join for free</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ══════════════════════════  HERO  ══════════════════════════ -->
+  <section class="hero">
+    <div class="shell hero__inner">
+      <div class="hero__copy">
+        <h1 class="hero__title">
+          Never retype your<br />
+          <span class="hero__title-accent">training plan again.</span>
+        </h1>
+
+        <p class="hero__sub">
+          Reps is a free workout tracker that reads the PDF your coach gave you and
+          turns it into a workout you log set by set.
+        </p>
+
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#install">Join for free</a>
+          <a class="btn btn--ghost" href="#how">See everything it does</a>
+        </div>
+
+        <ul class="hero__facts">
+          <li>Free while in beta</li>
+          <li>No feed, no followers</li>
+          <li>Installs from the browser</li>
+        </ul>
+      </div>
+
+      <div class="hero__art" aria-hidden="true">
+        <figure class="phone phone--back">
+          <img src="assets/shots/reps-days.png" alt="" width="1170" height="2532" loading="eager" decoding="async" />
+          <span class="phone__sweep" aria-hidden="true"></span>
+        </figure>
+        <figure class="phone phone--front">
+          <img src="assets/shots/reps-calc-c.png" alt="" width="1170" height="2532" loading="eager" decoding="async" fetchpriority="high" />
+          <span class="phone__sweep" aria-hidden="true"></span>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════  BUILT FOR  ══════════════════════ -->
+  <section class="banner" aria-labelledby="banner-title">
+    <div class="shell">
+      <h2 class="banner__title" id="banner-title">Sound familiar?</h2>
+      <p class="banner__claim">
+        Your coach sends a PDF. Your tracker makes you type it all back in
+        before you can log a single rep.
+      </p>
+    </div>
+
+    <div class="connector" aria-hidden="true"><span></span></div>
+  </section>
+
+  <!-- ══════════════════════  HOW IT WORKS  ══════════════════════ -->
+  <section class="how" id="how" aria-labelledby="how-title">
+    <div class="shell">
+      <div class="how__head">
+        <p class="eyebrow">How Reps fixes it</p>
+        <h2 class="how__title" id="how-title">Three steps to your first logged set.</h2>
+        <p class="how__lead">
+          You import it once. After that there’s no retyping, no spreadsheets,
+          and nothing to fight with mid-set.
+        </p>
+      </div>
+
+      <ol class="how__list">
+        <li class="how__step" style="--i:0">
+          <div class="how__card">
+            <span class="how__no" aria-hidden="true">1</span>
+            <h3>Upload the PDF</h3>
+            <p>Drop in the plan you were given. Reps pulls out the days, the
+               exercises, the sets and the rep ranges.</p>
+          </div>
+        </li>
+        <li class="how__step" style="--i:1">
+          <div class="how__card">
+            <span class="how__no" aria-hidden="true">2</span>
+            <h3>Check what it read</h3>
+            <p>It shows you what it found before anything is saved. Fix a name, a
+               number or a whole day if it got one wrong.</p>
+          </div>
+        </li>
+        <li class="how__step" style="--i:2">
+          <div class="how__card">
+            <span class="how__no" aria-hidden="true">3</span>
+            <h3>Train</h3>
+            <p>Every exercise opens on what you lifted last week. Log your sets,
+               signal or no signal.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ══════════════════════  FEATURE 1  ══════════════════════ -->
+  <section class="feature" id="plan">
+    <div class="shell feature__inner">
+      <figure class="panel" data-anim="days">
+        <div class="phone phone--static">
+          <img src="assets/shots/reps-days.png" alt="The Reps home screen listing three training days — Push marked ‘Up next’, Pull, and Legs marked complete — each with its body parts and exercise count." width="1170" height="2532" loading="lazy" decoding="async" />
+          <span class="phone__sweep" aria-hidden="true"></span>
+        </div>
+      </figure>
+
+      <div class="feature__copy">
+        <p class="eyebrow">Bring your own plan</p>
+        <h2>Your plan, without the typing.</h2>
+        <p class="feature__lead">
+          Reps reads the plan you already have — from your coach, your PT, your own
+          spreadsheet — and lays the whole block out as days you can tap into. Their
+          wording comes with it: if they wrote “Prime incline press”, that’s what
+          you’ll see, not one of four machines it could have been.
+        </p>
+        <ul class="checks">
+          <li>Reads the days, exercises, sets and reps out of a PDF</li>
+          <li>You know which machine they meant, not just which movement</li>
+          <li>Supersets and giant sets stay as rounds</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════  FEATURE 2  ══════════════════════ -->
+  <section class="feature feature--reverse" id="calculator">
+    <div class="shell feature__inner">
+      <figure class="panel" data-anim="calc">
+        <div class="phone phone--static phone--stack">
+          <img class="is-on" src="assets/shots/reps-calc-a.png" alt="The Reps barbell calculator with a light load: 15 kg a side, 55 kg with the bar." width="1170" height="2532" loading="lazy" decoding="async" />
+          <img src="assets/shots/reps-calc-b.png" alt="" aria-hidden="true" width="1170" height="2532" loading="lazy" decoding="async" />
+          <img src="assets/shots/reps-calc-c.png" alt="" aria-hidden="true" width="1170" height="2532" loading="lazy" decoding="async" />
+          <span class="phone__sweep" aria-hidden="true"></span>
+        </div>
+      </figure>
+
+      <div class="feature__copy">
+        <p class="eyebrow">The calculator</p>
+        <h2>Stop doing plate maths mid-set.</h2>
+        <p class="feature__lead">
+          Tap the plates you loaded. Reps stacks them on the bar and gives you all
+          three answers at once, because which number you want depends on how your
+          plan is written.
+        </p>
+
+        <div class="readout" role="group" aria-label="The three totals Reps shows">
+          <div class="readout__cell">
+            <span class="readout__label">One side</span>
+            <span class="readout__value" data-count="15" data-dp="0">15<span class="readout__unit">kg</span></span>
+          </div>
+          <div class="readout__cell readout__cell--on">
+            <span class="readout__label">With bar</span>
+            <span class="readout__value" data-count="55" data-dp="0">55<span class="readout__unit">kg</span></span>
+          </div>
+          <div class="readout__cell">
+            <span class="readout__label">Without bar</span>
+            <span class="readout__value" data-count="30" data-dp="0">30<span class="readout__unit">kg</span></span>
+          </div>
+        </div>
+
+        <ul class="checks">
+          <li>Olympic, women’s and easy bars — or set your own</li>
+          <li>Plates down to 0.5&nbsp;kg, plus any custom plate</li>
+          <li>Tap a plate on the bar to take it back off</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════  FEATURE 3 — MACHINES  ══════════════════════ -->
+  <section class="feature" id="machines">
+    <div class="shell feature__inner">
+      <figure class="panel" data-anim="pegs">
+        <div class="pegs">
+          <p class="pegs__title">Prime leg extension</p>
+          <ol class="pegs__list">
+            <li class="peg" style="--i:0">
+              <span class="peg__no">Peg 1</span>
+              <span class="peg__bar"><span class="peg__fill"></span></span>
+              <span class="peg__kg">20<span>kg</span></span>
+            </li>
+            <li class="peg" style="--i:1">
+              <span class="peg__no">Peg 2</span>
+              <span class="peg__bar"><span class="peg__fill"></span></span>
+              <span class="peg__kg">20<span>kg</span></span>
+            </li>
+            <li class="peg" style="--i:2">
+              <span class="peg__no">Peg 3</span>
+              <span class="peg__bar"><span class="peg__fill"></span></span>
+              <span class="peg__kg">10<span>kg</span></span>
+            </li>
+          </ol>
+          <div class="pegs__total">
+            <span class="pegs__total-label">Logged as</span>
+            <span class="pegs__total-value" data-count="50" data-dp="0">0<span>kg</span></span>
+          </div>
+        </div>
+      </figure>
+
+      <div class="feature__copy">
+        <p class="eyebrow">Advanced gyms</p>
+        <h2>Your machine numbers finally mean something.</h2>
+        <p class="feature__lead">
+          20&nbsp;kg on peg 3 is nothing like 20&nbsp;kg on peg 1 — each peg is a
+          different leverage. Reps saves a weight profile per machine, so the
+          number you logged last month still means something today.
+        </p>
+        <ul class="checks">
+          <li>Plate-loaded machines with up to eight pegs</li>
+          <li>Cable machines remember the cam position too</li>
+          <li>Your records compare like for like</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════  FEATURE 4 — OFFLINE  ══════════════════════ -->
+  <section class="feature feature--reverse" id="offline">
+    <div class="shell feature__inner">
+      <figure class="panel" data-anim="sync">
+        <div class="offline-card">
+          <div class="offline-card__row">
+            <span class="dot dot--off" aria-hidden="true"></span>
+            <span class="offline-card__state">No connection</span>
+          </div>
+          <p class="offline-card__big">Logged on your phone</p>
+          <ul class="offline-card__list">
+            <li style="--i:0"><span class="offline-card__tick" aria-hidden="true"></span> Bench press — 4 sets</li>
+            <li style="--i:1"><span class="offline-card__tick" aria-hidden="true"></span> Incline dumbbell — 3 sets</li>
+            <li style="--i:2"><span class="offline-card__tick" aria-hidden="true"></span> Cable fly — 3 sets</li>
+          </ul>
+          <div class="offline-card__foot">
+            <span class="dot dot--on" aria-hidden="true"></span>
+            <span>Back online — 10 sets sent</span>
+          </div>
+        </div>
+      </figure>
+
+      <div class="feature__copy">
+        <p class="eyebrow">No signal required</p>
+        <h2>No signal? Log it anyway.</h2>
+        <p class="feature__lead">
+          Most are, and most trackers quietly fall over in one. Reps assumes you
+          have no connection and works from the phone first, sending everything up
+          the moment real signal comes back.
+        </p>
+        <ul class="checks">
+          <li>Every set and note saves on the phone first</li>
+          <li>Last week’s weights arrive before you leave home</li>
+          <li>Checks afterwards that the workout really landed</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════  FEATURE 5 — PROGRESS  ══════════════════════ -->
+  <section class="feature" id="progress">
+    <div class="shell feature__inner">
+      <figure class="panel" data-anim="stats">
+        <div class="stat-grid">
+          <div class="stat" style="--i:0">
+            <span class="stat__label">Overall strength</span>
+            <span class="stat__value"><span data-count="8.4" data-dp="1" data-prefix="+">+0.0</span><span class="stat__unit">%</span></span>
+            <span class="stat__note">First two weeks vs last two</span>
+          </div>
+          <div class="stat" style="--i:1">
+            <span class="stat__label">This week</span>
+            <span class="stat__value"><span data-count="3" data-dp="0">0</span><span class="stat__unit">/4</span></span>
+            <span class="stat__note">Sessions done</span>
+          </div>
+          <div class="stat stat--wide" style="--i:2">
+            <span class="stat__label">New records this month</span>
+            <span class="stat__value"><span data-count="6" data-dp="0">0</span></span>
+            <span class="stat__note">Across bench, squat and row</span>
+          </div>
+        </div>
+      </figure>
+
+      <div class="feature__copy">
+        <p class="eyebrow">Progress you can read</p>
+        <h2>See whether the plan is working.</h2>
+        <p class="feature__lead">
+          Where you are in the block, whether you turned up, and whether the numbers
+          are going up. Your all-time records sit behind it, and starting a new plan
+          never resets them.
+        </p>
+        <ul class="checks">
+          <li>Estimated 1RM per lift, tracked across the block</li>
+          <li>Body weight over 12&nbsp;weeks, 6&nbsp;months or a year</li>
+          <li>A records board of every movement ever logged</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════  WHY  ══════════════════════ -->
+  <section class="why" aria-labelledby="why-title">
+    <div class="shell why__inner">
+      <p class="eyebrow">Between sets</p>
+      <h2 class="why__title" id="why-title">Less app, more workout.</h2>
+      <p class="why__body">
+        No feed. No followers. No streak to protect. Every exercise opens on what
+        you lifted last week with the rest timer already set from your plan, so
+        you log the set and get back under the bar.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════  MORE  ══════════════════════ -->
+  <section class="grid-section" id="more" aria-labelledby="more-title">
+    <div class="shell">
+      <h2 class="grid-section__title" id="more-title">And the rest of it</h2>
+      <ul class="cards">
+        <li class="card" style="--i:0">
+          <h3>Rest timer</h3>
+          <p>Reads the rest your coach wrote into the plan.</p>
+        </li>
+        <li class="card" style="--i:1">
+          <h3>Last time, filled in</h3>
+          <p>Every exercise opens on what you lifted last week.</p>
+        </li>
+        <li class="card" style="--i:2">
+          <h3>Rounds, not rests</h3>
+          <p>Supersets cycle through instead of resting between.</p>
+        </li>
+        <li class="card" style="--i:3">
+          <h3>Kg, lb or pin</h3>
+          <p>Set per machine, for gyms that mix them.</p>
+        </li>
+        <li class="card" style="--i:4">
+          <h3>Water</h3>
+          <p>Bottles, glasses, cups or litres. Your call.</p>
+        </li>
+        <li class="card" style="--i:5">
+          <h3>Steps</h3>
+          <p>A daily count with your goal across the chart.</p>
+        </li>
+        <li class="card" style="--i:6">
+          <h3>Body weight</h3>
+          <p>Pick a day, type the number. That’s it.</p>
+        </li>
+        <li class="card" style="--i:7">
+          <h3>Delete everything</h3>
+          <p>One tap wipes it from the server and the phone.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══════════════════════  COMING SOON  ══════════════════════ -->
+  <section class="soon" aria-labelledby="soon-title">
+    <div class="shell soon__inner">
+      <p class="soon__tag">Phase two</p>
+      <h2 class="soon__title" id="soon-title">Build your own plan</h2>
+      <p class="soon__sub">
+        Not everyone has a coach. Writing a plan inside Reps — days, exercises,
+        sets and rep ranges — is what we’re building next.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════  OBJECTIONS  ══════════════════════ -->
+  <section class="faq" aria-labelledby="faq-title">
+    <div class="shell faq__inner">
+      <div class="faq__copy">
+        <h2 id="faq-title">Before you ask</h2>
+        <p>The things people want to know before they hand a tracker their
+           training. If yours isn’t here, ask from inside the app — every screen
+           has a way to send a question.</p>
+      </div>
+
+      <dl class="faq__list">
+        <div class="faq__item">
+          <dt>What does it cost?</dt>
+          <dd>Nothing while Reps is in beta. It will move to a paid subscription
+              once it is out of beta — you’ll hear about that well before it
+              happens, not after. No ads either way.</dd>
+        </div>
+        <div class="faq__item">
+          <dt>Do I need an account?</dt>
+          <dd>An email and a password, so your history survives a new phone.
+              Nothing else, and no social login to untangle later.</dd>
+        </div>
+        <div class="faq__item">
+          <dt>What if it reads my plan wrong?</dt>
+          <dd>You see everything it found before it saves. Any exercise or day
+              can be edited on the spot, and you can re-upload whenever. If you
+              still can’t get it right, send a request from inside the app and
+              we’ll sort it out.</dd>
+        </div>
+        <div class="faq__item">
+          <dt>I already use another tracker.</dt>
+          <dd>Most are built for people who write their own workouts. If you
+              were handed a plan, you’ve been doing data entry to use one.</dd>
+        </div>
+        <div class="faq__item">
+          <dt>What happens to my data?</dt>
+          <dd>It stays yours. Delete your account from Profile and every set,
+              plan and weigh-in goes from the server and from the phone. There
+              are no ads, so there is nothing to sell on either.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ══════════════════════  INSTALL  ══════════════════════ -->
+  <section class="cta" id="install">
+    <div class="shell cta__inner">
+      <h2 class="cta__title">Put it on your home screen</h2>
+      <p class="cta__sub">
+        Reps is a web app — no store, no download, no review queue. Open it in your
+        browser, add it to your home screen, and it runs full-screen and offline
+        from then on.
+      </p>
+      <div class="cta__actions">
+        <!-- TODO: point this at the deployed PWA once its URL is known. -->
+        <a class="btn btn--invert" href="#" aria-disabled="true">Join for free</a>
+      </div>
+      <p class="cta__fine">Works on iPhone and Android. Free while Reps is in beta, with no ads.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="shell footer__inner">
+    <div class="footer__brand">
+      <img src="assets/Reps-Logo.svg" alt="Reps" width="669" height="122" />
+      <p>A workout tracker that runs the plan you already have.</p>
+    </div>
+    <nav class="footer__links" aria-label="The app">
+      <h2 class="footer__heading">The app</h2>
+      <a href="#plan">Your plan</a>
+      <a href="#calculator">The calculator</a>
+      <a href="#offline">Offline logging</a>
+      <a href="#progress">Progress</a>
+    </nav>
+  </div>
+  <div class="shell footer__base">
+    <p>© 2026 Reps</p>
+  </div>
+</footer>
+
+<script src="main.js" defer></script>
+</body>
+</html>

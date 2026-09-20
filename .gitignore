@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Local tooling installed into this project, not part of the site.
+# .agents/ also carries 123 pages of Apple's Human Interface Guidelines
+# pulled from developer.apple.com — Apple's copyright, not ours to republish.
+.agents/
+.claude/
+skills-lock.json
+
+# macOS
+.DS_Store
