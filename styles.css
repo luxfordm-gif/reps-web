@@ -294,7 +294,7 @@ a { color: inherit; }
   display: flex;
   flex-wrap: wrap;
   gap: 8px 20px;
-  margin: 28px 0 0;
+  margin: 58px 0 0;
   padding: 20px 0 0;
   border-top: 1px solid var(--line);
   list-style: none;
