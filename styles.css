@@ -310,18 +310,19 @@ a { color: inherit; }
   flex: none;
 }
 
-/* stacked phones, angled like a product shot */
+/* Stacked phones, both upright — the second sits behind and slightly lower,
+   the way Apple stages a pair. No rotation at any width. */
 .hero__art { position: relative; display: grid; place-items: center; min-height: clamp(560px, 66vh, 720px); }
 .hero__art .phone { position: absolute; }
 
 .phone--back {
-  width: 56%;
-  transform: translate(26%, -5%) rotate(7deg);
-  opacity: 0.9;
+  width: 54%;
+  transform: translate(34%, 6%);
+  opacity: 0.92;
 }
 .phone--front {
   width: 64%;
-  transform: translate(-12%, 3%) rotate(-3deg);
+  transform: translate(-14%, -2%);
   z-index: 2;
 }
 
@@ -729,16 +730,28 @@ a { color: inherit; }
   .hero__title { font-size: clamp(34px, 9.5vw, 46px); }
   .hero__actions .btn { flex: 1 1 100%; }
 
-  /* One height for every section image, so the column reads evenly. 2/3 gives
-     511px at this width: deep enough to show a useful slice of a phone, and
-     still taller than the biggest card (the stat grid needs 471). */
+  /* One height for every section image. 19/20 gives ~359px at this width —
+     about 30% shallower than before, so the page does not feel like a column
+     of tall grey boxes. */
   .panel {
-    aspect-ratio: 2 / 3;
+    aspect-ratio: 1 / 1;
     min-height: 0;
     overflow: hidden;
   }
-  /* A phone is cropped at the bottom; a card sits centred with room to spare. */
-  .panel:has(.phone) { place-items: start center; padding: 26px 20px 0; }
+  /* A phone runs off the bottom edge rather than leaving a gap under it.
+     --shift slides the screen up so the part worth seeing lands in the window
+     instead of the navigation bar at the top of it. */
+  .panel:has(.phone) { place-items: start center; padding: 32px 20px 0; }
+  /* Narrower than on desktop, so a shallower window still reaches past the
+     navigation bar to the part worth seeing — and the top of the phone stays
+     in frame, which is what makes it read as a phone at all. */
+  .panel .phone--static { width: min(214px, 62%); }
+  .panel:has(.phone) .phone { margin-top: var(--shift, 0px); }
+
+  #plan .panel { --shift: 0px; }         /* the day cards start at the top */
+  /* The calculator is the one screen where the top of the phone is worth
+     losing: the bar and the plate buttons are what the animation is doing. */
+  #calculator .panel { --shift: -110px; }
   .panel:has(.offline-card),
   .panel:has(.stat-grid),
   .panel:has(.pegs) { place-items: center; padding: 26px 20px; }
@@ -750,6 +763,9 @@ a { color: inherit; }
   .stat-grid { grid-template-columns: 1fr; }
   .help__list { padding-inline: 18px; }
   .cta { border-radius: 30px; }
+
+  /* The hero carries more air than the sections below it. */
+  .hero .shell { padding-inline: 30px; }
 
   /* Internal padding: the page gutter alone left text close to the card edge,
      which is tight on a narrow iPhone and worse on a wide Android. */
@@ -838,8 +854,8 @@ a { color: inherit; }
   to   { opacity: var(--end-opacity, 1); transform: translate(var(--tx, 0), var(--ty, 0)) rotate(var(--rot, 0deg)); }
 }
 
-.phone--back  { --tx: 26%; --ty: -5%; --rot: 7deg;  --end-opacity: 0.9; }
-.phone--front { --tx: -12%; --ty: 3%; --rot: -3deg; }
+.phone--back  { --tx: 34%; --ty: 6%;  --rot: 0deg; --end-opacity: 0.92; }
+.phone--front { --tx: -14%; --ty: -2%; --rot: 0deg; }
 
 /* A slow float, so the hero is never quite still. */
 .hero__art .phone::after { content: none; }
@@ -847,12 +863,12 @@ a { color: inherit; }
 .hero__art.is-float .phone--back  { animation: phone-in 900ms var(--e-snap) 280ms forwards, float-b 9s ease-in-out 1.4s infinite; }
 
 @keyframes float-a {
-  0%, 100% { transform: translate(-12%, 3%) rotate(-3deg); }
-  50%      { transform: translate(-12%, 1.2%) rotate(-3.4deg); }
+  0%, 100% { transform: translate(-14%, -2%); }
+  50%      { transform: translate(-14%, -3.4%); }
 }
 @keyframes float-b {
-  0%, 100% { transform: translate(26%, -5%) rotate(7deg); }
-  50%      { transform: translate(26%, -3.4%) rotate(6.6deg); }
+  0%, 100% { transform: translate(34%, 6%); }
+  50%      { transform: translate(34%, 4.6%); }
 }
 
 /* ── a light sweep passes over each screen once, when it arrives ── */
@@ -1044,8 +1060,8 @@ a { color: inherit; }
   }
   .peg__fill { width: var(--w, 100%) !important; animation: none !important; }
   .phone__sweep { display: none; }
-  .phone--back  { opacity: 0.9 !important; transform: translate(26%, -5%) rotate(7deg) !important; }
-  .phone--front { transform: translate(-12%, 3%) rotate(-3deg) !important; }
+  .phone--back  { opacity: 0.92 !important; transform: translate(34%, 6%) !important; }
+  .phone--front { transform: translate(-14%, -2%) !important; }
 }
 
 /* ─────────────────────  problem → fix connector  ───────────────────── */
