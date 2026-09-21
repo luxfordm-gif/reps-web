@@ -124,6 +124,66 @@
     else if (wide.addListener) wide.addListener(syncFaq);
   }
 
+  /* ── the headline keeps its two lines, whatever size the text comes out ──
+     Above the reduced-motion return with the FAQ, for the same reason: this
+     is layout, not movement.
+
+     The stylesheet sizes the headline off the column with about 10% to spare,
+     which covers every width and the difference between General Sans and the
+     fallback it is read in first. What it cannot see is a browser that
+     renders text larger than it asked for — an in-app browser carrying the
+     reader’s system font scale is the usual one, and 1.15× is ordinary. The
+     written break then lands mid-phrase and both lines wrap, which is how a
+     two-line headline becomes four ragged ones.
+
+     So measure rather than guess: lay each line out without wrapping, and if
+     the longer one has outgrown the column, hand the ratio back to the
+     stylesheet. A headline that already fits is left alone. */
+  var title = document.querySelector('.hero__title');
+  var titleLines = title ? title.querySelectorAll('.hero__title-line') : [];
+  if (titleLines.length) {
+    var titleRange = document.createRange();
+
+    function fitTitle() {
+      /* Measured at full size every time, so the answer is never derived from
+         a shrink already applied — a resize back up has to be able to undo
+         one. Nothing paints between here and the value set below. */
+      title.style.setProperty('--title-fit', '1');
+      title.style.whiteSpace = 'nowrap';
+
+      var room = title.getBoundingClientRect().width;
+      var widest = 0, i, rect;
+      for (i = 0; i < titleLines.length; i++) {
+        /* A range rather than the element: on a phone the copy is centred, so
+           a nowrap line overflows both edges and scrollWidth would only count
+           the half of it the reader could scroll to. */
+        titleRange.selectNodeContents(titleLines[i]);
+        rect = titleRange.getBoundingClientRect();
+        if (rect.width > widest) widest = rect.width;
+      }
+
+      title.style.whiteSpace = '';
+      if (!room || !widest || widest <= room) return;
+      /* Half a pixel off the column, so rounding cannot land the line back on
+         the edge it was just pulled off; and a floor, so a browser we have
+         not thought of cannot shrink the headline into the body copy. */
+      title.style.setProperty('--title-fit', Math.max((room - 0.5) / widest, 0.72).toFixed(4));
+    }
+
+    fitTitle();
+    /* The first measurement is taken in whatever font is up. General Sans
+       arrives over the network and runs wider than the fallback, so the
+       answer is worth taking again once it lands. */
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitTitle);
+
+    var titleQueued = false;
+    window.addEventListener('resize', function () {
+      if (titleQueued) return;
+      titleQueued = true;
+      window.requestAnimationFrame(function () { titleQueued = false; fitTitle(); });
+    });
+  }
+
   if (reduced || !hasIO) return;
 
   /* ── hero phones: let the entry animation finish before the float starts,
