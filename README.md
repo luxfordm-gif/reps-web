@@ -61,8 +61,9 @@ node tools/shoot-og.mjs      # in another
 
 **The Open Graph tags hard-code the site URL.** Scrapers need an absolute
 `og:image` and show nothing if it 404s, so if the deployed domain is not
-`reps-web.netlify.app`, update every `https://reps-web.netlify.app` in
-`index.html` to match.
+`getrepsapp.app`, update every `https://getrepsapp.app` in `index.html` to
+match. The canonical points at the apex, so whichever of the apex and `www`
+is set primary in Netlify has to be the one named here.
 
 ## Notes
 
