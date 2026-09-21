@@ -18,10 +18,12 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
     # Fonts come from Fontshare (stylesheet from api., files from cdn.).
-    # The sha256 is the one inline script in index.html, which sets the .js
-    # class before first paint — if you edit that line, recompute the hash or
-    # the script is blocked and every animated element stays hidden.
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw='; style-src 'self' https://api.fontshare.com; font-src https://cdn.fontshare.com; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    # Two inline scripts are hashed: the one in index.html that sets the .js
+    # class before first paint, and the gtag bootstrap on every page — if you
+    # edit either line, recompute its hash or the script is blocked (for the
+    # first that means every animated element stays hidden). The googletagmanager
+    # and google-analytics origins are what gtag.js loads from and beacons to.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=' 'sha256-erdiVz297ryI2CBnUI4mUMT9VhuDTjsZDNcSYrIGIJ4=' https://www.googletagmanager.com; style-src 'self' https://api.fontshare.com; font-src https://cdn.fontshare.com; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 
 # The page itself is small and changes often — always revalidate.
 [[headers]]
