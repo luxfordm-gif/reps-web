@@ -37,8 +37,9 @@
      below: a reader who asked for stillness still gets to see where they are,
      and the reduced-motion block turns the slide into a jump. */
   var bar = nav && nav.querySelector('.nav__links');
-  var ink = bar && bar.querySelector('.nav__ink');
-  if (bar && ink) {
+  var inner = nav && nav.querySelector('.nav__inner');
+  var ink = inner && inner.querySelector('.nav__ink');
+  if (bar && ink && inner) {
     var marks = [];
     [].forEach.call(bar.querySelectorAll('a'), function (a) {
       var section = document.getElementById(a.getAttribute('href').slice(1));
@@ -48,8 +49,16 @@
     var at = -1;
     function paint(force) {
       /* Below 1000px the links are display:none, so there is nothing to
-         measure — offsetLeft would read 0 and park the rule at the left. */
-      if (!bar.offsetParent) return;
+         measure — an empty rect would park the rule at the left. The rule
+         hangs off .nav__inner now, which stays visible, so it has to be put
+         away by hand: leaving it up would strand it under a bar with no
+         links after a resize down. */
+      if (!bar.offsetParent) {
+        if (at > -1) marks[at].link.removeAttribute('aria-current');
+        at = -1;
+        inner.removeAttribute('data-on');
+        return;
+      }
 
       /* The section you are "in" is the last one whose top has passed under
          the nav. Two sections have no link of their own, so the previous
@@ -67,13 +76,17 @@
 
       if (at > -1) marks[at].link.removeAttribute('aria-current');
       at = now;
-      if (at < 0) { bar.removeAttribute('data-on'); return; }
+      if (at < 0) { inner.removeAttribute('data-on'); return; }
 
-      var a = marks[at].link;
-      a.setAttribute('aria-current', 'true');
-      ink.style.setProperty('--ink-x', a.offsetLeft + 'px');
-      ink.style.setProperty('--ink-w', a.offsetWidth + 'px');
-      bar.setAttribute('data-on', '');
+      /* Measured against .nav__inner, which is what the rule hangs off now.
+         offsetLeft would answer relative to whichever ancestor happens to be
+         positioned; two rects subtracted are relative to what we asked. */
+      var a = marks[at].link.getBoundingClientRect();
+      var box = inner.getBoundingClientRect();
+      marks[at].link.setAttribute('aria-current', 'true');
+      ink.style.setProperty('--ink-x', (a.left - box.left) + 'px');
+      ink.style.setProperty('--ink-w', a.width + 'px');
+      inner.setAttribute('data-on', '');
     }
 
     var queued = false;
