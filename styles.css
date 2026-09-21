@@ -579,13 +579,26 @@ a { color: inherit; }
   content: "";
   width: 22px;
   height: 22px;
-  margin-top: 3px;
+  /* Fallback for browsers without the lh unit: the line box is 24.65px and the
+     disc is 22px, so a touch over 1px centres it. */
+  margin-top: 1px;
   background: var(--ink);
   /* The tick has to be a hole: a CSS mask reads alpha, so a white stroke would
      be just as opaque as the disc and we'd get a filled circle. */
   -webkit-mask: var(--tick) center / contain no-repeat;
   mask: var(--tick) center / contain no-repeat;
   flex: none;
+}
+
+/* Centre the disc on the first line instead of guessing an offset from the top
+   of it. The box becomes exactly one line tall and `contain` centres the 22px
+   disc inside it, so the alignment follows the type rather than a number that
+   has to be re-tuned whenever the size or line-height moves. */
+@supports (height: 1lh) {
+  .checks li::before {
+    height: 1lh;
+    margin-top: 0;
+  }
 }
 
 /* the calculator's three totals, echoing the app's own control */
@@ -867,7 +880,17 @@ a { color: inherit; }
 }
 
 @media (max-width: 560px) {
-  :root { --gutter: 22px; }
+  /* Both section rhythms are already at the floor of their clamp by this
+     width, so they no longer scale with the screen: 72 and 80px of air above
+     and below every section, set for a page two to four times as wide. One
+     column is a column of full-width blocks with nothing beside them, so the
+     padding is doing far less work separating them than it does on desktop.
+     Trimmed to a rhythm that still reads as a break between sections. */
+  :root {
+    --gutter: 22px;
+    --section-y: 52px;
+    --section-y-lg: 56px;
+  }
   body { font-size: 17px; }
 
   /* “training plan again.” is the longer of the two lines, about 8.7em wide
@@ -962,6 +985,18 @@ a { color: inherit; }
   .panel .pegs__list { gap: 12px; }
   .panel .pegs__total { margin-top: 18px; padding-top: 15px; }
   .panel .pegs__total-value { font-size: 28px; }
+
+  /* Stacked rather than side by side, so the gap is now vertical: the
+     desktop value reads as a gulf between a panel and the copy about it. */
+  .feature__inner { gap: 24px; }
+  .checks { margin-top: 22px; }
+
+  /* One column, so each card crosses the threshold on its own and reveals on
+     its own — the index stops being a stagger and becomes a per-card lag that
+     grows down the list. The last cards would sit blank for half a second
+     after they are already on screen, while any card sharing the viewport
+     with them beats them in. Each one fades as it arrives instead. */
+  .card.is-in { transition-delay: 0ms; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1000,6 +1035,8 @@ a { color: inherit; }
 .cards .card:nth-child(6) { --i: 5; }
 .cards .card:nth-child(7) { --i: 6; }
 .cards .card:nth-child(8) { --i: 7; }
+.cards .card:nth-child(9) { --i: 8; }
+.cards .card:nth-child(10) { --i: 9; }
 
 /* ═══════════════════════════  IN-SECTION MOTION  ═══════════════════════════
    Each figure plays once, when it is reached. Everything here is inert until
