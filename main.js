@@ -32,6 +32,63 @@
     }).observe(sentinel);
   }
 
+  /* ── the nav marks the section you are in, and the rule slides to it ──
+     Location rather than motion, so it sits above the reduced-motion return
+     below: a reader who asked for stillness still gets to see where they are,
+     and the reduced-motion block turns the slide into a jump. */
+  var bar = nav && nav.querySelector('.nav__links');
+  var ink = bar && bar.querySelector('.nav__ink');
+  if (bar && ink) {
+    var marks = [];
+    [].forEach.call(bar.querySelectorAll('a'), function (a) {
+      var section = document.getElementById(a.getAttribute('href').slice(1));
+      if (section) marks.push({ link: a, section: section });
+    });
+
+    var at = -1;
+    function paint(force) {
+      /* Below 1000px the links are display:none, so there is nothing to
+         measure — offsetLeft would read 0 and park the rule at the left. */
+      if (!bar.offsetParent) return;
+
+      /* The section you are "in" is the last one whose top has passed under
+         the nav. Two sections have no link of their own, so the previous
+         one simply stays marked while you read them, which is what a reader
+         would say is true anyway. */
+      /* Comfortably below the 88px scroll-padding an anchor jump lands on:
+         at nav height + 8 a clicked link put its section 8px short of the
+         line, so the nav still marked the section above it. */
+      var line = nav.offsetHeight + 24;
+      var now = -1, i;
+      for (i = 0; i < marks.length; i++) {
+        if (marks[i].section.getBoundingClientRect().top <= line) now = i;
+      }
+      if (now === at && !force) return;
+
+      if (at > -1) marks[at].link.removeAttribute('aria-current');
+      at = now;
+      if (at < 0) { bar.removeAttribute('data-on'); return; }
+
+      var a = marks[at].link;
+      a.setAttribute('aria-current', 'true');
+      ink.style.setProperty('--ink-x', a.offsetLeft + 'px');
+      ink.style.setProperty('--ink-w', a.offsetWidth + 'px');
+      bar.setAttribute('data-on', '');
+    }
+
+    var queued = false;
+    function schedule(force) {
+      if (queued) return;
+      queued = true;
+      window.requestAnimationFrame(function () { queued = false; paint(force); });
+    }
+    window.addEventListener('scroll', function () { schedule(false); }, { passive: true });
+    /* A resize moves the links, so the rule is remeasured even where the
+       section it belongs to has not changed. */
+    window.addEventListener('resize', function () { schedule(true); });
+    paint(true);
+  }
+
   /* ── FAQ: first answer open on desktop, all closed on a phone ──
      Deliberately above the reduced-motion return: this is layout, not motion,
      and someone who has asked for less movement still wants the answers open
