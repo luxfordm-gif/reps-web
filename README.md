@@ -38,16 +38,45 @@ GitHub → `reps-web`. The settings come from `netlify.toml`, so leave the build
 command empty and the publish directory as `.`.
 
 The config also sets security headers and a Content-Security-Policy. The CSP
-pins a `sha256` hash of the single inline script in `index.html` (the one that
-sets the `.js` class before first paint). **If you edit that line, recompute
-the hash**, or the script is blocked and every animated element stays hidden:
+pins a `sha256` hash of every inline script on the site, and there are two: the
+one in `index.html` that sets the `.js` class before first paint, and the gtag
+bootstrap that appears on all three pages. **If you edit either, recompute its
+hash**, or the script is blocked — for the first that means every animated
+element stays hidden, and for the second that analytics quietly stop. This
+prints the hash of each inline script it finds, so the output can be compared
+against the `script-src` list:
 
 ```bash
-printf "%s" "document.documentElement.classList.add('js');" | openssl dgst -sha256 -binary | openssl base64
+python3 -c "
+import re, hashlib, base64
+for f in ['index.html', 'thanks.html', 'thanks-notify.html']:
+    for b in re.findall(r'<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>', open(f).read(), re.S):
+        print(f, 'sha256-' + base64.b64encode(hashlib.sha256(b.encode()).digest()).decode())
+"
 ```
 
 Stagger indices live in `styles.css` as `:nth-child` rules rather than
 `style="--i:n"` attributes, so the CSP can forbid inline styles outright.
+
+## Analytics
+
+Google Analytics 4 (property `G-B41RFPJ6BQ`), as the standard gtag snippet in
+the `<head>` of `index.html`, `thanks.html` and `thanks-notify.html`. The two
+thanks pages are the only signal that a request actually went through, so they
+are worth counting; `tools/og.html` is a local screenshot rig and is left out.
+
+The CSP has to allow all of it — `www.googletagmanager.com` to load the script,
+and `*.google-analytics.com` / `*.analytics.google.com` to receive the beacons.
+Those last two are wildcards on purpose: GA4 routes collection through a
+regional host (`region1.google-analytics.com` from the UK), so pinning the
+literal `www.google-analytics.com` would pass a local test and then drop every
+hit in production.
+
+Two things this setup does not do yet. It fires before any consent, which UK
+PECR expects for analytics cookies — Consent Mode v2 or a small banner would
+settle that. And it records page views only, so form submissions are inferred
+from thanks-page views rather than measured; marking those as key events in the
+GA4 admin is the cheapest way to get a conversion number.
 
 ## Social share card
 
