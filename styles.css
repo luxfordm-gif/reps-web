@@ -298,12 +298,25 @@ a { color: inherit; }
 .hero__title {
   font-family: var(--font-display);
   /* General Sans runs wider than SF Pro; 58px keeps “Never retype your”
-     on one line so the hard break lands where it was written to. */
-  font-size: clamp(38px, 4.2vw, 58px);
+     on one line so the written break lands where it was meant to.
+
+     --title-fit is main.js’s last word on that. A stylesheet can only size
+     the headline for text rendered at the size it asked for, and an in-app
+     browser — Instagram’s and Facebook’s are Android WebViews — carries the
+     reader’s system font scale into the page and renders every size 15% or
+     more larger than that. main.js measures what actually came out and hands
+     back a ratio below 1 when a line has outgrown its column. */
+  font-size: calc(clamp(38px, 4.2vw, 58px) * var(--title-fit, 1));
   font-weight: 600;                /* General Sans Semibold */
   line-height: 1.12;
   letter-spacing: -0.018em;
 }
+
+/* Two lines, not one sentence with a break in it: each is its own block, so
+   the colour change and the line break are the same edit, and a line that
+   does outgrow its column wraps within itself rather than pushing the other
+   line’s words around. */
+.hero__title-line { display: block; }
 .hero__title-accent { color: var(--muted); }
 
 .hero__sub {
@@ -809,7 +822,14 @@ a { color: inherit; }
   :root { --gutter: 22px; }
   body { font-size: 17px; }
 
-  .hero__title { font-size: clamp(34px, 9.5vw, 46px); }
+  /* “training plan again.” is the longer of the two lines, about 8.7em wide
+     in General Sans Semibold. 9.5vw sized it to 96–99% of the column, which
+     is not a fit so much as a coincidence: it already spilled at 320px, and
+     any browser rendering text larger than asked spilled at every width.
+     Sizing off the column instead — 100vw less the hero’s two 30px gutters,
+     over 9.6 — leaves about 10% in hand at every width. --title-fit covers what is
+     left, and the 27px floor is the narrowest phone worth drawing for. */
+  .hero__title { font-size: calc(clamp(27px, (100vw - 60px) / 9.6, 46px) * var(--title-fit, 1)); }
   .hero__actions .btn { flex: 1 1 100%; }
 
   /* One height for every section image. 10/9 is another 10% off the square,
