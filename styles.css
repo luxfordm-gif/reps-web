@@ -978,8 +978,11 @@ a { color: inherit; }
   .feature__inner { gap: 24px; }
   .checks { margin-top: 22px; }
 
-  /* The tick reads a shade high against the line beside it at this size. */
-  .checks li::before { margin-top: 4px; }
+  /* The tick reads a shade high against the line beside it at this size.
+     Half a pixel: a whole one dropped it past the line rather than onto it,
+     and the screens this rule is for are all 2x or 3x, so it lands on a
+     device pixel rather than being rounded away. */
+  .checks li::before { margin-top: 3.5px; }
 
   /* One column, so each card crosses the threshold on its own and reveals on
      its own — the index stops being a stagger and becomes a per-card lag that
