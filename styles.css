@@ -867,7 +867,17 @@ a { color: inherit; }
 }
 
 @media (max-width: 560px) {
-  :root { --gutter: 22px; }
+  /* Both section rhythms are already at the floor of their clamp by this
+     width, so they no longer scale with the screen: 72 and 80px of air above
+     and below every section, set for a page two to four times as wide. One
+     column is a column of full-width blocks with nothing beside them, so the
+     padding is doing far less work separating them than it does on desktop.
+     Trimmed to a rhythm that still reads as a break between sections. */
+  :root {
+    --gutter: 22px;
+    --section-y: 52px;
+    --section-y-lg: 56px;
+  }
   body { font-size: 17px; }
 
   /* “training plan again.” is the longer of the two lines, about 8.7em wide
@@ -962,6 +972,11 @@ a { color: inherit; }
   .panel .pegs__list { gap: 12px; }
   .panel .pegs__total { margin-top: 18px; padding-top: 15px; }
   .panel .pegs__total-value { font-size: 28px; }
+
+  /* Stacked rather than side by side, so the gap is now vertical: the
+     desktop value reads as a gulf between a panel and the copy about it. */
+  .feature__inner { gap: 24px; }
+  .checks { margin-top: 22px; }
 
   /* The tick reads a shade high against the line beside it at this size. */
   .checks li::before { margin-top: 4px; }
