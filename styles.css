@@ -962,6 +962,16 @@ a { color: inherit; }
   .panel .pegs__list { gap: 12px; }
   .panel .pegs__total { margin-top: 18px; padding-top: 15px; }
   .panel .pegs__total-value { font-size: 28px; }
+
+  /* The tick reads a shade high against the line beside it at this size. */
+  .checks li::before { margin-top: 4px; }
+
+  /* One column, so each card crosses the threshold on its own and reveals on
+     its own — the index stops being a stagger and becomes a per-card lag that
+     grows down the list. The last cards would sit blank for half a second
+     after they are already on screen, while any card sharing the viewport
+     with them beats them in. Each one fades as it arrives instead. */
+  .card.is-in { transition-delay: 0ms; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1000,6 +1010,8 @@ a { color: inherit; }
 .cards .card:nth-child(6) { --i: 5; }
 .cards .card:nth-child(7) { --i: 6; }
 .cards .card:nth-child(8) { --i: 7; }
+.cards .card:nth-child(9) { --i: 8; }
+.cards .card:nth-child(10) { --i: 9; }
 
 /* ═══════════════════════════  IN-SECTION MOTION  ═══════════════════════════
    Each figure plays once, when it is reached. Everything here is inert until
