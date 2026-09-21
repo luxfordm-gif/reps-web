@@ -579,13 +579,26 @@ a { color: inherit; }
   content: "";
   width: 22px;
   height: 22px;
-  margin-top: 3px;
+  /* Fallback for browsers without the lh unit: the line box is 24.65px and the
+     disc is 22px, so a touch over 1px centres it. */
+  margin-top: 1px;
   background: var(--ink);
   /* The tick has to be a hole: a CSS mask reads alpha, so a white stroke would
      be just as opaque as the disc and we'd get a filled circle. */
   -webkit-mask: var(--tick) center / contain no-repeat;
   mask: var(--tick) center / contain no-repeat;
   flex: none;
+}
+
+/* Centre the disc on the first line instead of guessing an offset from the top
+   of it. The box becomes exactly one line tall and `contain` centres the 22px
+   disc inside it, so the alignment follows the type rather than a number that
+   has to be re-tuned whenever the size or line-height moves. */
+@supports (height: 1lh) {
+  .checks li::before {
+    height: 1lh;
+    margin-top: 0;
+  }
 }
 
 /* the calculator's three totals, echoing the app's own control */
@@ -977,12 +990,6 @@ a { color: inherit; }
      desktop value reads as a gulf between a panel and the copy about it. */
   .feature__inner { gap: 24px; }
   .checks { margin-top: 22px; }
-
-  /* The tick reads a shade high against the line beside it at this size.
-     Half a pixel: a whole one dropped it past the line rather than onto it,
-     and the screens this rule is for are all 2x or 3x, so it lands on a
-     device pixel rather than being rounded away. */
-  .checks li::before { margin-top: 3.5px; }
 
   /* One column, so each card crosses the threshold on its own and reveals on
      its own — the index stops being a stagger and becomes a per-card lag that
