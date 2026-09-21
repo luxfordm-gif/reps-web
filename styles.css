@@ -214,7 +214,7 @@ a { color: inherit; }
 }
 .nav[data-stuck="true"] { border-bottom-color: var(--line); }
 
-.nav__inner { display: flex; align-items: center; gap: 32px; height: 72px; }
+.nav__inner { position: relative; display: flex; align-items: center; gap: 32px; height: 72px; }
 
 .nav__brand {
   display: flex;
@@ -234,7 +234,6 @@ a { color: inherit; }
 :root[data-theme="dark"] .footer__brand img { filter: invert(1); }
 
 .nav__links {
-  position: relative;            /* the rule below is positioned off this */
   display: flex;
   align-items: center;
   gap: 28px;
@@ -246,11 +245,17 @@ a { color: inherit; }
 /* One rule that travels, rather than a border per link: it slides between
    items as the reader moves down the page. Width and offset come from the
    active link, measured in main.js — which is also why it stays invisible
-   without scripting, where there is nothing to measure or follow. */
+   without scripting, where there is nothing to measure or follow.
+
+   It hangs off .nav__inner, not the links row, so it lands on the bar's
+   own bottom border rather than tucking under the text like an underline:
+   -1px against a 2px rule straddles the 1px hairline. The hairline only
+   appears once the bar is stuck, and by then the first section has passed
+   under it, so the two turn up together. */
 .nav__ink {
   position: absolute;
   left: 0;
-  bottom: 11px;
+  bottom: -1px;
   height: 2px;
   width: var(--ink-w, 0px);
   border-radius: 2px;
@@ -262,7 +267,7 @@ a { color: inherit; }
               width 380ms var(--e-snap),
               opacity 200ms var(--e-snap);
 }
-.nav__links[data-on] .nav__ink { opacity: 1; }
+.nav__inner[data-on] .nav__ink { opacity: 1; }
 .nav__links a[aria-current] { color: var(--ink); }
 .nav__links a {
   display: inline-flex;
