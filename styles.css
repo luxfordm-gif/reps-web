@@ -329,7 +329,12 @@ a { color: inherit; }
   color: var(--muted-text);
 }
 
-.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+/* 48px, not the 28px that follows a paragraph elsewhere: the buttons are a
+   different kind of thing from the sentence above them, and at the hero's
+   scale 28px read as the last line of the paragraph rather than the start of
+   the next move. The 58px to the facts rule stays larger, so the order of
+   the three still reads. Narrow layouts keep 28px — see below. */
+.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 48px; }
 
 .hero__facts {
   display: flex;
@@ -862,7 +867,9 @@ a { color: inherit; }
   /* One column reads better centred, and it balances the phone below it. */
   .hero__copy { text-align: center; }
   .hero__sub { margin-inline: auto; }
-  .hero__actions { justify-content: center; }
+  /* One column is already a stack of full-width blocks, so the buttons read as
+     their own move without the extra air the two-column hero needs. */
+  .hero__actions { justify-content: center; margin-top: 28px; }
   .hero__facts { justify-content: center; }
 }
 
