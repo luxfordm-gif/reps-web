@@ -539,6 +539,38 @@
           <input id="req-email" name="email" type="email" autocomplete="email" required />
         </div>
 
+        <!-- Which phone and browser someone is on decides which build reaches
+             them first, so it is asked here rather than guessed from the user
+             agent: plenty of these arrive from an in-app browser that says
+             nothing about what the person actually uses day to day. -->
+        <div class="request__field">
+          <label for="req-device">Your phone</label>
+          <div class="request__select">
+            <select id="req-device" name="device" required>
+              <option value="" disabled selected>Choose one</option>
+              <option value="iPhone">iPhone (iOS)</option>
+              <option value="Android">Android</option>
+              <option value="Other">Something else</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="request__field">
+          <label for="req-browser">Default browser</label>
+          <div class="request__select">
+            <select id="req-browser" name="browser" required>
+              <option value="" disabled selected>Choose one</option>
+              <option value="Safari">Safari</option>
+              <option value="Chrome">Chrome</option>
+              <option value="Samsung Internet">Samsung Internet</option>
+              <option value="Firefox">Firefox</option>
+              <option value="Edge">Edge</option>
+              <option value="Other">Something else</option>
+              <option value="Not sure">Not sure</option>
+            </select>
+          </div>
+        </div>
+
         <label class="request__check">
           <input type="checkbox" name="has-plan" value="yes" required />
           <span>I have a training plan as a PDF from a coach or trainer</span>
@@ -551,7 +583,9 @@
 
         <button class="btn btn--invert request__submit" type="submit">Request access</button>
         <p class="request__fine">
-          Your details go to me and nowhere else. Free while Reps is in beta, with no ads.
+          The phone and browser only decide which build you get first. Your
+          details go to me and nowhere else. Free while Reps is in beta, with
+          no ads.
         </p>
       </form>
     </div>

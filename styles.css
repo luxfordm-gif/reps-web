@@ -1685,6 +1685,60 @@ a { color: inherit; }
 }
 .request__field input:focus-visible { outline: 2px solid var(--form-ink); outline-offset: 2px; }
 
+/* Phone and browser are <select>s dressed as the text fields above.
+   appearance:none takes the platform arrow with it, so .request__select draws
+   one back as a pseudo-element the pointer passes straight through. */
+.request__select { position: relative; display: grid; }
+.request__field select {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 44px 0 16px;         /* room on the right for the chevron */
+  font: inherit;
+  font-size: 16px;                /* 16px or iOS zooms the page on focus */
+  color: var(--form-ink);
+  background: transparent;
+  border: 1px solid var(--form-line);
+  border-radius: var(--r-control);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition: border-color var(--t-press) var(--e-snap);
+}
+.request__field select:hover { border-color: var(--form-muted); }
+.request__field select:focus {
+  outline: none;
+  border-color: var(--form-ink);
+}
+.request__field select:focus-visible { outline: 2px solid var(--form-ink); outline-offset: 2px; }
+
+/* Nothing is chosen yet, so the prompt sits at label weight rather than
+   pretending to be an answer. :invalid only matches while the empty
+   placeholder option is the selected one. */
+.request__field select:invalid { color: var(--form-muted); }
+
+/* The open list is painted by the platform against the page, not against the
+   band the control sits on — left to inherit, the black CTA band hands it
+   white text on a white menu. The page palette is legible either way. */
+.request__field select option {
+  color: var(--ink);
+  background: var(--paper-card);
+}
+
+.request__select::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 19px;
+  width: 8px;
+  height: 8px;
+  margin-top: -6px;
+  border: 2px solid var(--form-muted);
+  border-top: 0;
+  border-left: 0;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
 .request__check {
   display: grid;
   grid-template-columns: 22px 1fr;

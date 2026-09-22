@@ -107,3 +107,9 @@ is set primary in Netlify has to be the one named here.
   **Turn on the email notification** in Netlify → Forms → Settings, or
   submissions sit in the dashboard and nobody hears about them. The CSP sets
   `form-action 'self'`; tightening it back to `'none'` breaks the form.
+
+  The form collects name, email, phone (`device`) and default browser
+  (`browser`), plus the two consent boxes. Netlify reads a form's fields off
+  the deployed HTML, so a new field only appears in submissions — and as a
+  column in the CSV export — from the deploy that added it onwards; requests
+  already in the dashboard keep the shape they were sent with.
