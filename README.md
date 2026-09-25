@@ -40,7 +40,7 @@ command empty and the publish directory as `.`.
 The config also sets security headers and a Content-Security-Policy. The CSP
 pins a `sha256` hash of every inline script on the site, and there are two: the
 one in `index.html` that sets the `.js` class before first paint, and the gtag
-bootstrap that appears on all three pages. **If you edit either, recompute its
+bootstrap that appears on all four pages. **If you edit either, recompute its
 hash**, or the script is blocked — for the first that means every animated
 element stays hidden, and for the second that analytics quietly stop. This
 prints the hash of each inline script it finds, so the output can be compared
@@ -49,7 +49,7 @@ against the `script-src` list:
 ```bash
 python3 -c "
 import re, hashlib, base64
-for f in ['index.html', 'thanks.html', 'thanks-notify.html']:
+for f in ['index.html', 'thanks.html', 'thanks-notify.html', 'thanks-coach.html']:
     for b in re.findall(r'<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>', open(f).read(), re.S):
         print(f, 'sha256-' + base64.b64encode(hashlib.sha256(b.encode()).digest()).decode())
 "
@@ -61,8 +61,8 @@ Stagger indices live in `styles.css` as `:nth-child` rules rather than
 ## Analytics
 
 Google Analytics 4 (property `G-B41RFPJ6BQ`), as the standard gtag snippet in
-the `<head>` of `index.html`, `thanks.html` and `thanks-notify.html`. The two
-thanks pages are the only signal that a request actually went through, so they
+the `<head>` of `index.html`, `thanks.html`, `thanks-notify.html` and
+`thanks-coach.html`. The thanks pages are the only signal that a request actually went through, so they
 are worth counting; `tools/og.html` is a local screenshot rig and is left out.
 
 The CSP has to allow all of it — `www.googletagmanager.com` to load the script,
@@ -113,3 +113,6 @@ is set primary in Netlify has to be the one named here.
   the deployed HTML, so a new field only appears in submissions — and as a
   column in the CSV export — from the deploy that added it onwards; requests
   already in the dashboard keep the shape they were sent with.
+- Coaches have their own form, `coach` (name and email), behind the line under
+  the access form. They can't honestly tick the plan checkbox, and one coach can
+  bring several clients, so it's kept separate. It posts to `thanks-coach.html`.

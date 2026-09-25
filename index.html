@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Reps — the workout tracker that reads your training plan</title>
-<meta name="description" content="Upload the PDF your coach wrote and Reps turns it into a workout you log set by set. It does the plate maths and works with no signal. Free while in beta." />
+<meta name="description" content="Upload the plan your coach wrote and Reps turns it into a workout you log set by set. It does the plate maths and works with no signal. Free while in beta." />
 
 <!-- Social share. SITE_URL must match the deployed domain: scrapers need an
      absolute og:image and will silently show nothing if it 404s. -->
@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Reps" />
 <meta property="og:url" content="https://getrepsapp.app/" />
 <meta property="og:title" content="Never retype your training plan" />
-<meta property="og:description" content="Upload the PDF your coach gave you and Reps turns it into a workout you log set by set — plate maths done, machine settings remembered, no signal needed." />
+<meta property="og:description" content="Upload the plan your coach gave you and Reps turns it into a workout you log set by set — plate maths done, machine settings remembered, no signal needed." />
 <meta property="og:image" content="https://getrepsapp.app/assets/og.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="2400" />
@@ -21,7 +21,7 @@
 <meta property="og:image:alt" content="Reps — never retype your training plan again. The barbell calculator on an iPhone, with plates loaded on the bar." />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Never retype your training plan" />
-<meta name="twitter:description" content="Upload the PDF your coach gave you and Reps turns it into a workout you log set by set — plate maths done, machine settings remembered, no signal needed." />
+<meta name="twitter:description" content="Upload the plan your coach gave you and Reps turns it into a workout you log set by set — plate maths done, machine settings remembered, no signal needed." />
 <meta name="twitter:image" content="https://getrepsapp.app/assets/og.png" />
 <meta name="theme-color" content="#FAFAFA" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)" />
@@ -83,7 +83,7 @@
         </h1>
 
         <p class="hero__sub">
-          Upload the PDF your coach gave you. Reps turns it into a workout you log
+          Upload the plan your coach gave you. Reps turns it into a workout you log
           set by set &mdash; plate maths done, machine settings remembered, no signal
           needed.
         </p>
@@ -133,7 +133,7 @@
     <div class="shell">
       <h2 class="banner__title" id="banner-title">Sound familiar?</h2>
       <p class="banner__claim">
-        Your coach sends a PDF. Everything after that is copying — into a
+        Your coach sends a plan. Everything after that is copying — into a
         notebook, a spreadsheet, or an app, set by set.
       </p>
     </div>
@@ -157,8 +157,9 @@
         <li class="how__step">
           <div class="how__card">
             <span class="how__no" aria-hidden="true">1</span>
-            <h3>Upload the PDF</h3>
-            <p>Drop in the plan you were given. Reps pulls out the days, the
+            <h3>Upload the plan</h3>
+            <p>Drop in the PDF you were given, or a spreadsheet saved as one.
+               Reps pulls out the days, the
                exercises, the sets and the rep ranges — in your coach’s own
                words, down to “Prime incline press”.</p>
           </div>
@@ -369,6 +370,10 @@
           <p>A coach’s 1·1·2·1 stays on the exercise while you lift.</p>
         </li>
         <li class="card">
+          <h3>Notes for your coach</h3>
+          <p>Copy the week’s session notes as one tidy message, ready to paste to your coach.</p>
+        </li>
+        <li class="card">
           <h3>Last time, filled in</h3>
           <p>Last week’s weights are sitting in the field before you type.</p>
         </li>
@@ -484,6 +489,13 @@
         </details>
         <details class="faq__item">
           <summary>
+            <span>What format does my plan need to be?</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="faq__answer"><p>A PDF with real text in it — the kind a coach exports from Word, Google Docs or their coaching software. A spreadsheet works too: in Google Sheets or Excel, save or download it as a PDF, then upload that. Photos and screenshots can’t be read yet, because there’s no text inside them to pull out.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary>
             <span>What if it reads my plan wrong?</span>
             <span class="faq__icon" aria-hidden="true"></span>
           </summary>
@@ -573,7 +585,7 @@
 
         <label class="request__check">
           <input type="checkbox" name="has-plan" value="yes" required />
-          <span>I have a training plan as a PDF from a coach or trainer</span>
+          <span>I have a written training plan from a coach or trainer</span>
         </label>
 
         <label class="request__check">
@@ -588,6 +600,44 @@
           no ads.
         </p>
       </form>
+
+      <!-- Coaches can't honestly tick "I have a plan from a coach", and one
+           coach brings a roster of clients, so they get their own door. Same
+           <details> pattern as phase two: a line of text until it's opened. -->
+      <details class="coach">
+        <summary class="coach__open">Coach? Leave your email and I’ll set up your clients.</summary>
+
+        <form
+          class="request coach__form"
+          name="coach"
+          method="POST"
+          action="/thanks-coach.html"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+        >
+          <input type="hidden" name="form-name" value="coach" />
+          <p class="request__trap" aria-hidden="true">
+            <label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
+
+          <div class="request__field">
+            <label for="coach-name">Your name</label>
+            <input id="coach-name" name="name" type="text" autocomplete="name" required />
+          </div>
+
+          <div class="request__field">
+            <label for="coach-email">Email</label>
+            <input id="coach-email" name="email" type="email" autocomplete="email" required />
+          </div>
+
+          <label class="request__check">
+            <input type="checkbox" name="contact-ok" value="yes" required />
+            <span>I’m happy to be emailed about setting up my clients</span>
+          </label>
+
+          <button class="btn btn--invert request__submit" type="submit">Get in touch</button>
+        </form>
+      </details>
     </div>
   </section>
 
