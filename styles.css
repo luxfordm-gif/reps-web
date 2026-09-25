@@ -1037,6 +1037,7 @@ a { color: inherit; }
 .cards .card:nth-child(8) { --i: 7; }
 .cards .card:nth-child(9) { --i: 8; }
 .cards .card:nth-child(10) { --i: 9; }
+.cards .card:nth-child(11) { --i: 10; }
 
 /* ═══════════════════════════  IN-SECTION MOTION  ═══════════════════════════
    Each figure plays once, when it is reached. Everything here is inert until
@@ -1761,6 +1762,31 @@ a { color: inherit; }
 .request__check:hover { color: var(--form-ink); }
 
 .request__submit { width: 100%; margin-top: 8px; }
+
+/* ── coaches: one line under the access form, a form once opened ── */
+.coach {
+  width: min(420px, 100%);
+  margin: 28px auto 0;
+  text-align: center;
+}
+.coach__open {
+  display: inline;
+  list-style: none;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--on-ink-muted);
+  text-decoration: underline;
+  text-decoration-color: var(--on-ink-line);
+  text-underline-offset: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+.coach__open::-webkit-details-marker { display: none; }
+.coach__open::marker { content: ""; }
+.coach__open:hover,
+.coach[open] .coach__open { color: var(--on-ink); text-decoration-color: currentColor; }
+.coach__form { margin-top: 20px; }
+.coach[open] .coach__form { animation: faq-open 260ms var(--e-snap); }
 
 .request__fine {
   margin: 0;
