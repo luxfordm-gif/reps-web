@@ -307,6 +307,44 @@
     <div class="shell feature__inner">
       <figure class="panel" data-anim="stats">
         <div class="stat-grid">
+          <!-- The Performance tab's estimated-1RM chart, drawn the way the app
+               draws it: one ink line over a fading fill, a dashed grid, no
+               legend. Twelve weeks of bench, 84.5 kg to 92.5 kg. It leads the
+               panel because a climbing line is the proof the heading promises.
+               The line draws itself in as the figure counts up beside it;
+               without JS, or with reduced motion, it simply sits there finished. -->
+          <div class="stat stat--wide stat--chart">
+            <div class="stat__head">
+              <div>
+                <span class="stat__label">Bench press · est. 1RM</span>
+                <span class="stat__value"><span data-count="92.5" data-from="84.5" data-delay="600" data-ms="1400" data-dp="1">92.5</span><span class="stat__unit">&nbsp;kg</span></span>
+              </div>
+              <span class="stat__delta">+8.0&nbsp;kg</span>
+            </div>
+            <svg class="chart" viewBox="0 0 300 86" role="img"
+                 aria-label="Estimated one-rep max on bench press, rising from 84.5 kg to 92.5 kg over twelve weeks">
+              <defs>
+                <linearGradient id="e1rm-fill" x1="0" y1="0" x2="0" y2="1">
+                  <stop class="chart__stop chart__stop--top" offset="0%" />
+                  <stop class="chart__stop" offset="100%" />
+                </linearGradient>
+              </defs>
+              <g class="chart__axis">
+                <line class="chart__grid" x1="30" x2="300" y1="6.0" y2="6.0" />
+                <line class="chart__grid" x1="30" x2="300" y1="31.6" y2="31.6" />
+                <line class="chart__grid" x1="30" x2="300" y1="57.2" y2="57.2" />
+                <text x="20" y="9.0" text-anchor="end">95</text>
+                <text x="20" y="34.6" text-anchor="end">90</text>
+                <text x="20" y="60.2" text-anchor="end">85</text>
+                <text x="30" y="84">Week 1</text>
+                <text x="292" y="84" text-anchor="end">This week</text>
+              </g>
+              <path class="chart__area" fill="url(#e1rm-fill)" d="M30.0,59.8 C34.0,58.5 45.9,52.9 53.8,52.1 C61.8,51.2 69.7,55.9 77.6,54.6 C85.6,53.4 93.5,46.5 101.5,44.4 C109.4,42.3 117.3,41.4 125.3,41.8 C133.2,42.3 141.2,48.2 149.1,47.0 C157.0,45.7 165.0,36.7 172.9,34.2 C180.8,31.6 188.8,31.6 196.7,31.6 C204.7,31.6 212.6,35.0 220.5,34.2 C228.5,33.3 236.4,28.6 244.4,26.5 C252.3,24.3 260.2,22.6 268.2,21.4 C276.1,20.1 288.0,19.2 292.0,18.8 L292.0,70 L30.0,70 Z" />
+              <path class="chart__line" pathLength="1" d="M30.0,59.8 C34.0,58.5 45.9,52.9 53.8,52.1 C61.8,51.2 69.7,55.9 77.6,54.6 C85.6,53.4 93.5,46.5 101.5,44.4 C109.4,42.3 117.3,41.4 125.3,41.8 C133.2,42.3 141.2,48.2 149.1,47.0 C157.0,45.7 165.0,36.7 172.9,34.2 C180.8,31.6 188.8,31.6 196.7,31.6 C204.7,31.6 212.6,35.0 220.5,34.2 C228.5,33.3 236.4,28.6 244.4,26.5 C252.3,24.3 260.2,22.6 268.2,21.4 C276.1,20.1 288.0,19.2 292.0,18.8" />
+              <circle class="chart__halo" cx="292" cy="18.8" r="9" />
+              <circle class="chart__dot" cx="292" cy="18.8" r="4" />
+            </svg>
+          </div>
           <div class="stat">
             <span class="stat__label">Strength</span>
             <span class="stat__value"><span data-count="8.4" data-dp="1" data-prefix="+">+0.0</span><span class="stat__unit">%</span></span>
@@ -316,11 +354,6 @@
             <span class="stat__label">This week</span>
             <span class="stat__value"><span data-count="3" data-dp="0">0</span><span class="stat__unit">/4</span></span>
             <span class="stat__note">Sessions</span>
-          </div>
-          <div class="stat stat--wide">
-            <span class="stat__label">New records</span>
-            <span class="stat__value"><span data-count="6" data-dp="0">0</span></span>
-            <span class="stat__note">Bench, squat and row</span>
           </div>
         </div>
       </figure>
@@ -334,10 +367,9 @@
           weight is heading.
         </p>
         <ul class="checks">
-          <li>Estimated one-rep max per lift, across the block</li>
-          <li>Body weight over 12&nbsp;weeks, 6&nbsp;months or a year</li>
+          <li>Estimated one-rep max for every lift, across the block</li>
           <li>Sessions turned up against sessions planned</li>
-          <li>A records board of every movement ever logged</li>
+          <li>A records board of every movement you’ve logged</li>
         </ul>
       </div>
     </div>
