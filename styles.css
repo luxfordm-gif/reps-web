@@ -714,6 +714,41 @@ a { color: inherit; }
 .stat__unit { font-size: 18px; color: var(--muted-text); }
 .stat__note { font-size: 13px; color: var(--muted-text); }
 
+/* The wide tile carries the Performance tab's estimated-1RM chart. */
+.stat__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.stat--chart .stat__value { margin-bottom: 0; }
+.stat__delta {
+  flex: none;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--paper-card);
+  background: var(--ink);
+  border-radius: var(--r-pill);
+  padding: 6px 10px;
+}
+.chart { display: block; width: 100%; height: auto; margin-top: 16px; overflow: visible; }
+.chart__grid { stroke: var(--line); stroke-width: 1; stroke-dasharray: 3 4; }
+.chart__axis text {
+  fill: var(--muted);
+  font-family: var(--font);
+  font-size: 9.5px;
+  font-variant-numeric: tabular-nums;
+}
+.chart__stop { stop-color: var(--ink); stop-opacity: 0; }
+.chart__stop--top { stop-opacity: 0.1; }
+.chart__line {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+}
+.chart__halo { fill: var(--ink); opacity: 0.1; }
+.chart__dot { fill: var(--ink); stroke: var(--paper-card); stroke-width: 2; }
+
 /* ─────────────────────────────  cards grid  ───────────────────────────── */
 
 .grid-section { padding-block: var(--section-y-lg); }
@@ -953,6 +988,12 @@ a { color: inherit; }
   .stat__value { font-size: 30px; margin: 8px 0 4px; }
   .stat__unit { font-size: 16px; }
   .stat__note { font-size: 12.5px; }
+  .stat--chart .stat__value { font-size: 28px; margin-top: 6px; }
+  .stat__delta { font-size: 11px; padding: 5px 8px; }
+  .chart { margin-top: 10px; }
+  /* The chart tile makes this the tallest thing in a short panel, so it
+     gets the thinnest frame. */
+  .panel:has(.stat-grid) { padding: 12px; }
   .help__list { padding-inline: 18px; }
   .cta { border-radius: 30px; }
 
@@ -1280,6 +1321,33 @@ a { color: inherit; }
   transition-delay: calc(var(--i) * 140ms + 200ms);
 }
 
+/* The chart tile lands first; the line then draws left to right while the
+   figure above it counts up, the fill settles under it, and this week's point
+   arrives last with a ring that breathes out once. */
+.js .chart__line { stroke-dashoffset: 1; }
+.js .chart__area { opacity: 0; }
+.js .chart__dot,
+.js .chart__halo { opacity: 0; transform: scale(0.2); transform-box: fill-box; transform-origin: center; }
+[data-anim="stats"].is-in .chart__line {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1400ms cubic-bezier(0.45, 0, 0.2, 1) 600ms;
+}
+[data-anim="stats"].is-in .chart__area {
+  opacity: 1;
+  transition: opacity 800ms ease-out 1200ms;
+}
+[data-anim="stats"].is-in .chart__dot {
+  opacity: 1;
+  transform: none;
+  transition: opacity 160ms ease-out 1950ms, transform 420ms var(--e-snap) 1950ms;
+}
+[data-anim="stats"].is-in .chart__halo { animation: halo 1100ms var(--e-snap) 2000ms both; }
+@keyframes halo {
+  0%   { opacity: 0;   transform: scale(0.3); }
+  40%  { opacity: 0.22; transform: scale(1.5); }
+  100% { opacity: 0.1;  transform: scale(1); }
+}
+
 /* ── coming soon ── */
 .soon { padding-block: var(--section-y); }
 .soon__inner {
@@ -1343,6 +1411,9 @@ a { color: inherit; }
   .hero__art .phone,
   .peg,
   .stat,
+  .chart__area,
+  .chart__dot,
+  .chart__halo,
   .offline-card__tick,
   .offline-card__foot > * {
     opacity: 1 !important;
@@ -1350,6 +1421,7 @@ a { color: inherit; }
     animation: none !important;
   }
   .peg__fill { width: var(--w, 100%) !important; animation: none !important; }
+  .chart__line { stroke-dashoffset: 0 !important; transition: none !important; }
   .phone__sweep { display: none; }
   /* The sync loop never starts, so the card rests on the end of its story
      rather than on "no connection" with the sets already sent. */

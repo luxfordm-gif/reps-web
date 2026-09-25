@@ -310,14 +310,25 @@
     })();
   }
 
-  /* Numbers run up to their value the first time their section is reached. */
+  /* Numbers run up to their value the first time their section is reached.
+     A number can carry its own timing: data-from winds it back to a starting
+     value (so the markup can hold the finished figure for anyone without
+     motion), and data-delay / data-ms pace it against something else moving —
+     the bench figure runs alongside the chart line drawing beneath it. */
   function countUp(scope, delay) {
     if (!scope) return;
     scope.querySelectorAll('[data-count]').forEach(function (el) {
       var to = parseFloat(el.getAttribute('data-count'));
       var dp = parseInt(el.getAttribute('data-dp'), 10) || 0;
       var prefix = el.getAttribute('data-prefix') || '';
-      window.setTimeout(function () { animate(el, to, dp, prefix); }, delay);
+      var from = el.getAttribute('data-from');
+      var wait = el.hasAttribute('data-delay') ? parseInt(el.getAttribute('data-delay'), 10) : delay;
+      var ms = parseInt(el.getAttribute('data-ms'), 10) || undefined;
+      if (from !== null) {
+        var node = firstText(el);
+        if (node) node.nodeValue = prefix + parseFloat(from).toFixed(dp);
+      }
+      window.setTimeout(function () { animate(el, to, dp, prefix, ms); }, wait);
     });
   }
 
